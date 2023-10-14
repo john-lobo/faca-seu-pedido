@@ -14,5 +14,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Faça seu pedido"
-include(":app")
- 
+include(":features:app")
+include(":data:baseservice")
+include(":features:coreandroid")
+include(":data:storeservice")
