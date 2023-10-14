@@ -40,6 +40,7 @@ android {
 
 dependencies {
     implementation(project(":data:baseservice"))
+    implementation(project(":data:productservice"))
     implementation(project(":features:coreandroid"))
 
     implementation("androidx.core:core-ktx:1.9.0")

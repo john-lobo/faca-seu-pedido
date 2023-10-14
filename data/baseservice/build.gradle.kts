@@ -62,4 +62,8 @@ dependencies {
     // RxJava
     api("io.reactivex.rxjava2:rxjava:2.2.21")
     api("io.reactivex.rxjava2:rxandroid:2.1.1")
+
+    //Gson
+    val gson_version = "2.9.0"
+    api ("com.google.code.gson:gson:$gson_version")
 }

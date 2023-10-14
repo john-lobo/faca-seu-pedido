@@ -1,6 +1,7 @@
 package com.jlndev.facaseupedido.application
 
 import android.app.Application
+import com.jlndev.productservice.di.productServiceModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,6 +15,7 @@ class MainApplication : Application() {
             androidLogger()
             androidContext(this@MainApplication)
             val modules = arrayListOf<Module>().apply {
+                add(productServiceModule)
             }
             modules(modules)
         }

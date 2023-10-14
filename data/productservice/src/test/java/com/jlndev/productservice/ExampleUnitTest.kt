@@ -1,4 +1,4 @@
-package com.jlndev.storeservice
+package com.jlndev.productservice
 
 import org.junit.Test
 

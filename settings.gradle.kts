@@ -17,4 +17,4 @@ rootProject.name = "Faça seu pedido"
 include(":features:app")
 include(":data:baseservice")
 include(":features:coreandroid")
-include(":data:storeservice")
+include(":data:productservice")

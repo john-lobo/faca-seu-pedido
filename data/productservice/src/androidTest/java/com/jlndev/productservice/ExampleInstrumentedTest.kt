@@ -1,4 +1,4 @@
-package com.jlndev.storeservice
+package com.jlndev.productservice
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
