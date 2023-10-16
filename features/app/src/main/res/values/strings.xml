@@ -10,4 +10,14 @@
     <string name="menu_home">Home</string>
     <string name="menu_cart">Cart</string>
     <string name="menu_order_history">Order History</string>
+
+    <string name="generic_error">Ops! \nOcorreu um erro.</string>
+    <string name="try_again">Tentar Novamente</string>
+    <string name="informe_quantity">Informe a quantidade</string>
+    <string name="quantity">Quantidade</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="product_added_to_cart">Produto Adicionado ao carrinho</string>
+    <string name="error_add_to_cart">Erro ao adicionar produto</string>
+    <string name="go_to_cart">Ir para o carrinho</string>
 </resources>

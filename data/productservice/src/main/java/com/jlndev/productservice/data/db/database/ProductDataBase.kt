@@ -8,9 +8,11 @@ import com.jlndev.productservice.BuildConfig
 import com.jlndev.productservice.data.db.dao.CartDao
 import com.jlndev.productservice.data.db.dao.OrderHistoryDao
 import com.jlndev.productservice.data.db.dao.ProductShowcaseDao
+import com.jlndev.productservice.data.db.model.CartProductItemEntity
+import com.jlndev.productservice.data.db.model.OrderHistoryEntity
 import com.jlndev.productservice.data.db.model.ProductItemEntity
 
-@Database(entities = [ProductItemEntity::class], version = 1, exportSchema = false)
+@Database(entities = [ProductItemEntity::class, OrderHistoryEntity::class, CartProductItemEntity::class], version = 1, exportSchema = false)
 abstract class ProductDataBase: RoomDatabase() {
 
     abstract val cartDao: CartDao

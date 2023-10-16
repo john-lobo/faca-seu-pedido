@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.jlndev.storeservice"
+    namespace = "com.jlndev.productservice"
     compileSdk = 33
 
     defaultConfig {

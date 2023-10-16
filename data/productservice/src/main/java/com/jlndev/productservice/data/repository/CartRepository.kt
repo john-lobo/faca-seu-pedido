@@ -6,7 +6,8 @@ import io.reactivex.Single
 
 interface CartRepository {
     fun getProductsItems  (): Single<List<ProductItemModel>>
-    fun insertProductItem  (productItemModel: ProductItemModel, quantity: Int): Completable
+    fun insertProductItem  (productItemModel: ProductItemModel): Completable
     fun deleteProductItem  (productItemModel: ProductItemModel): Completable
     fun deleteAllProductsItems() : Completable
+    fun getProductItem(productItemModel: ProductItemModel) : Single<ProductItemModel>
 }

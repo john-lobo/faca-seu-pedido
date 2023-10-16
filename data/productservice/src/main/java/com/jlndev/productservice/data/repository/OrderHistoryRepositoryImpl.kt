@@ -3,8 +3,6 @@ package com.jlndev.productservice.data.repository
 import com.google.gson.Gson
 import com.jlndev.productservice.data.db.dao.OrderHistoryDao
 import com.jlndev.productservice.data.db.model.OrderHistoryEntity
-import com.jlndev.productservice.data.repository.ext.toProductItemEntity
-import com.jlndev.productservice.data.repository.ext.toProductItemModel
 import com.jlndev.productservice.data.repository.model.OrderHistoryItemModel
 import com.jlndev.productservice.data.repository.model.ProductItemModel
 import io.reactivex.Completable
@@ -21,7 +19,8 @@ class OrderHistoryRepositoryImpl(
                     val order = Gson().fromJson(orderHistory.order, Array<ProductItemModel>::class.java).asList()
                     OrderHistoryItemModel(
                         orderHistory.id,
-                        order
+                        order,
+                        orderHistory.totalValue
                     )
                 }
             }
@@ -30,8 +29,9 @@ class OrderHistoryRepositoryImpl(
         }
     }
 
-    override fun insertOrder(productsItem: List<ProductItemModel>): Completable {
-        val orderItem = Gson().toJson(productsItem)
-        return cartDao.insertOrder(OrderHistoryEntity(order = orderItem))
+    override fun insertOrder(productsItems: List<ProductItemModel>): Completable {
+        val orderItem = Gson().toJson(productsItems)
+        val totalValue = productsItems.sumOf { it.price * it.quantity }
+        return cartDao.insertOrder(OrderHistoryEntity(order = orderItem, totalValue = totalValue))
     }
 }

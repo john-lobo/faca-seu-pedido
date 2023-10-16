@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
+import com.jlndev.coreandroid.ext.gone
+import com.jlndev.coreandroid.ext.visible
 
 interface BaseFragmentInterface<VB : ViewBinding, VM> {
 
@@ -16,6 +18,10 @@ interface BaseFragmentInterface<VB : ViewBinding, VM> {
     fun onGetViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
     fun onInitViews()
     fun onInitViewModel()
+    fun showLoading()
+    fun hideLoading()
+    fun showView()
+    fun showErrorView()
 
     fun onCreateView(
         inflater: LayoutInflater,

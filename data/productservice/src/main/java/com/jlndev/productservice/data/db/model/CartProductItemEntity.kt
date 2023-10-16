@@ -3,8 +3,8 @@ package com.jlndev.productservice.data.db.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "ProductsTable")
-data class ProductItemEntity(
+@Entity(tableName = "CartTable")
+data class CartProductItemEntity(
     @PrimaryKey
     val id: Int,
     val title: String,

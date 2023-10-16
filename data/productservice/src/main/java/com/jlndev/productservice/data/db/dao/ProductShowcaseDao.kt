@@ -1,7 +1,6 @@
 package com.jlndev.productservice.data.db.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -14,6 +13,6 @@ interface ProductShowcaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertProductsItems(productsItems: List<ProductItemEntity>) : Completable
 
-    @Query("SELECT * FROM ProductItemEntity")
+    @Query("SELECT * FROM ProductsTable")
     fun getAllProductsItems(): Single<List<ProductItemEntity>>
 }

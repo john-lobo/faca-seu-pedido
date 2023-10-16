@@ -37,13 +37,14 @@ fun View.gone(animate: Boolean = false) {
 fun View.showSnackbar(
     message: String,
     actionText: String? = null,
-    action: (() -> Unit)? = null,
-    view: View? = null
+    view: View? = null,
+    action: (() -> Unit)? = null
 ) {
-    val snackbar = Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
+    val snackbar = Snackbar.make(this, message, Snackbar.LENGTH_LONG)
     if (actionText != null && action != null) {
         snackbar.setAction(actionText) {
             action()
+            snackbar.dismiss()
         }
     }
     snackbar.setAnchorView(view)

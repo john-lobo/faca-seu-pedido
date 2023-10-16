@@ -6,5 +6,5 @@ data class ProductItemModel(
     val description: String,
     val price: Double,
     val image: String,
-    val rating: RatingItemModel,
+    var quantity: Int = 1
 )

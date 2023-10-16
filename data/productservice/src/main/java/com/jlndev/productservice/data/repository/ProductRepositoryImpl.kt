@@ -29,8 +29,8 @@ class ProductRepositoryImpl(
     private fun getAndSaveProductsItems(): Single<List<ProductItemModel>> {
         return service.getProductsItems()
             .flatMap { response ->
-                productShowcaseDao.insertProductsItems(response.productsItems.map { it.toProductItemEntity() })
-                    .toSingleDefault(response.productsItems.map { it.toProductItemModel() })
+                productShowcaseDao.insertProductsItems(response.map { it.toProductItemEntity() })
+                    .toSingleDefault(response.map { it.toProductItemModel() })
             }
     }
 }

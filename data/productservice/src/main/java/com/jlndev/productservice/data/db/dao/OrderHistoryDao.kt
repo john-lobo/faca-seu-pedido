@@ -14,6 +14,6 @@ interface OrderHistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrder(orderItem: OrderHistoryEntity) : Completable
 
-    @Query("SELECT * FROM OrderEntity")
+    @Query("SELECT * FROM OrderHistoryTable")
     fun getAllOrders(): Single<List<OrderHistoryEntity>>
 }
