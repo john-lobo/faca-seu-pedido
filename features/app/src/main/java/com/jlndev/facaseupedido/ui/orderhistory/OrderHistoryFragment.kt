@@ -2,13 +2,18 @@ package com.jlndev.facaseupedido.ui.orderhistory
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.gone
 import com.jlndev.coreandroid.ext.visible
+import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentOrderHistoryBinding
+import com.jlndev.facaseupedido.ui.item.DetailsFragment
 import com.jlndev.facaseupedido.ui.orderhistory.adapter.OrderHistoryAdapter
 import com.jlndev.facaseupedido.ui.uitls.ext.toOrderHistoryItem
+import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHistoryViewModel>() {
@@ -26,7 +31,12 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
     ): FragmentOrderHistoryBinding = FragmentOrderHistoryBinding.inflate(inflater, container, false)
 
     override fun onInitViews() {
-        orderHistoryAdapter = OrderHistoryAdapter()
+        orderHistoryAdapter = OrderHistoryAdapter(object :
+            OrderHistoryAdapter.OrderHistoryAdapterListener {
+            override fun clickedProductItem(item: ProductItem) {
+                findNavController().navigate(R.id.action_order_history_to_details, bundleOf(DetailsFragment.KEY_PRODUCT_ITEM to item, DetailsFragment.KEY_SHOW_BUTTON to false))
+            }
+        })
         binding.recyclerOrdersHistoryItemsView.adapter = orderHistoryAdapter
     }
 

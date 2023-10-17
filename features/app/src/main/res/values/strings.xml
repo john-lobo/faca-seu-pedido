@@ -45,4 +45,6 @@
     <string name="order_id">ID do pedido: %1$s</string>
     <string name="order_total_price">Valor total: %1$s</string>
     <string name="order_quantity">Quantidade de itens: %1$d</string>
+    <string name="decription">Descrição</string>
+    <string name="success_order">Pedido realizado com sucesso! \nvocê pode visualizar AGORA seu pedido \nclicando no botão abaixo</string>
 </resources>

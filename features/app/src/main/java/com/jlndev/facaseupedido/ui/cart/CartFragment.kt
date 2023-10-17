@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.os.bundleOf
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.gone
@@ -15,6 +18,8 @@ import com.jlndev.facaseupedido.MainActivity
 import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentCartBinding
 import com.jlndev.facaseupedido.ui.cart.adapter.CartProductAdapter
+import com.jlndev.facaseupedido.ui.item.DetailsFragment
+import com.jlndev.facaseupedido.ui.item.DetailsFragment.Companion.KEY_SHOW_BUTTON
 import com.jlndev.facaseupedido.ui.uitls.components.QuantityInputDialog
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItem
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItemModel
@@ -35,6 +40,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
     override fun onInitViews() {
         cartProductAdapter = CartProductAdapter(object : CartProductAdapter.CartProductAdapterListener {
             override fun onAdapterItemClicked(position: Int, item: ProductItem, view: View?) {
+                findNavController().navigate(R.id.action_cart_to_details, bundleOf(DetailsFragment.KEY_PRODUCT_ITEM to item, KEY_SHOW_BUTTON to false))
             }
 
             override fun updateProcutToCart(productItem: ProductItem) {
@@ -66,6 +72,14 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
             }
             confirmOrderView.confirmOrderView.setOnClickListener {
                 showConfirmationDialog(binding.confirmOrderView.totalValueView.text.toString(), cartProductAdapter.getProductItems().sumOf { it.quantity })
+            }
+
+            errorView.retryButton.setOnClickListener {
+                viewModel.getProductsItems()
+            }
+
+            successOrderView.navToOrderView.setOnClickListener {
+                navToOrderHistory()
             }
         }
     }
@@ -136,9 +150,8 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                 it?.let {
                     when(it) {
                         is ResponseState.Success -> {
-                            requireView().showSnackbar(getString(R.string.create_order))
                             cartProductAdapter.submiListProductItems(listOf())
-                            showViewProductNotFound()
+                            showViewSuccessOrder()
                         }
                         is ResponseState.Error -> {
                             requireView().showSnackbar(getString(R.string.create_order_error)) {
@@ -185,15 +198,22 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
         }
     }
 
+    private fun showViewSuccessOrder() {
+        with(binding) {
+            recyclerCartProductItemsView.gone()
+            confirmOrderView.root.gone()
+            errorView.root.gone()
+            notProductsCartView.root.gone()
+            successOrderView.root.visible()
+        }
+    }
+
     override fun showErrorView() {
         with(binding) {
             confirmOrderView.root.gone()
             notProductsCartView.root.gone()
             recyclerCartProductItemsView.gone()
             errorView.root.visible()
-            errorView.retryButton.setOnClickListener {
-                viewModel.getProductsItems()
-            }
         }
     }
 
@@ -275,5 +295,13 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
 
     private fun navToHome() {
         requireActivity().supportFragmentManager.popBackStackImmediate()
+    }
+
+    private fun navToOrderHistory() {
+        val navOptions: NavOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.nav_home, inclusive = false, saveState = true)
+            .setRestoreState(true)
+            .build()
+        findNavController().navigate(R.id.nav_order_history, null, navOptions)
     }
 }

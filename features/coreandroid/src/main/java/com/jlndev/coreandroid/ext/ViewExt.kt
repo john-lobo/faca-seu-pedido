@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.view.View
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 
 fun View.visible(animate: Boolean = false) {
@@ -48,5 +49,21 @@ fun View.showSnackbar(
         }
     }
     snackbar.setAnchorView(view)
+    snackbar.show()
+}
+
+fun FragmentActivity.showSnackbar(
+    message: String,
+    actionText: String? = null,
+    action: (() -> Unit)? = null
+) {
+    val rootView = findViewById<View>(android.R.id.content)
+    val snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+    if (actionText != null && action != null) {
+        snackbar.setAction(actionText) {
+            action()
+            snackbar.dismiss()
+        }
+    }
     snackbar.show()
 }

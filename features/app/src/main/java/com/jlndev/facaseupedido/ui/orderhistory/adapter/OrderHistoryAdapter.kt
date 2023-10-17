@@ -14,7 +14,9 @@ import com.jlndev.facaseupedido.databinding.ItemOrderHistoryBinding
 import com.jlndev.facaseupedido.ui.uitls.model.OrderHistoryItem
 import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
 
-class OrderHistoryAdapter : BaseAdapterController<OrderHistoryItem, BaseViewHolder<OrderHistoryItem>, BaseAdapterListener<OrderHistoryItem>>() {
+class OrderHistoryAdapter(
+    private val orderHistoryAdapterListener: OrderHistoryAdapterListener
+) : BaseAdapterController<OrderHistoryItem, BaseViewHolder<OrderHistoryItem>, BaseAdapterListener<OrderHistoryItem>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<OrderHistoryItem> {
         val itemBinding = ItemOrderHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -33,6 +35,7 @@ class OrderHistoryAdapter : BaseAdapterController<OrderHistoryItem, BaseViewHold
                         item: ProductItem,
                         view: View?
                     ) {
+                        orderHistoryAdapterListener.clickedProductItem(item)
                     }
                 }).apply {
                     submitList(item.productsItems)
@@ -59,5 +62,9 @@ class OrderHistoryAdapter : BaseAdapterController<OrderHistoryItem, BaseViewHold
                 }
             }
         }
+    }
+
+    interface OrderHistoryAdapterListener {
+        fun clickedProductItem(item: ProductItem)
     }
 }

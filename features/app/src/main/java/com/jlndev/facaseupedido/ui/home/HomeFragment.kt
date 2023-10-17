@@ -1,9 +1,9 @@
 package com.jlndev.facaseupedido.ui.home
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.jlndev.baseservice.state.ResponseState
@@ -13,8 +13,9 @@ import com.jlndev.coreandroid.ext.showSnackbar
 import com.jlndev.coreandroid.ext.visible
 import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentHomeBinding
-import com.jlndev.facaseupedido.ui.uitls.components.QuantityInputDialog
 import com.jlndev.facaseupedido.ui.home.adapter.ProductAdapter
+import com.jlndev.facaseupedido.ui.item.DetailsFragment.Companion.KEY_PRODUCT_ITEM
+import com.jlndev.facaseupedido.ui.uitls.components.QuantityInputDialog
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItem
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItemModel
 import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
@@ -24,10 +25,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     override val viewModel: HomeViewModel by viewModel()
     private lateinit var productAdapter: ProductAdapter
-
-    companion object {
-        const val KEY_PRODUCT_ITEM = "KEY_PRODUCT_ITEM"
-    }
 
     override fun onInitData() {
         viewModel.getProductsItems()
@@ -41,6 +38,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     override fun onInitViews() {
         productAdapter = ProductAdapter(object : ProductAdapter.ProductAdapterListener {
             override fun onAdapterItemClicked(position: Int, item: ProductItem, view: View?) {
+                findNavController().navigate(R.id.action_home_to_details, bundleOf(KEY_PRODUCT_ITEM to item))
             }
 
             override fun addProcutToCart(productItem: ProductItem) {
