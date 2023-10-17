@@ -1,6 +1,6 @@
-package com.jlndev.facaseupedido.ui.home.adapter.ext
+package com.jlndev.facaseupedido.ui.uitls.ext
 
-import com.jlndev.facaseupedido.ui.home.adapter.model.ProductItem
+import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
 import com.jlndev.productservice.data.repository.model.ProductItemModel
 
 fun ProductItemModel.toProductItem(): ProductItem {

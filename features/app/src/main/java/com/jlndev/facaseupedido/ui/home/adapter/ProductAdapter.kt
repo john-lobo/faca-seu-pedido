@@ -6,8 +6,9 @@ import com.jlndev.coreandroid.bases.adapter.BaseAdapterController
 import com.jlndev.coreandroid.bases.adapter.BaseAdapterListener
 import com.jlndev.coreandroid.bases.adapter.BaseViewHolder
 import com.jlndev.coreandroid.ext.loadImage
+import com.jlndev.coreandroid.ext.toCurrency
 import com.jlndev.facaseupedido.databinding.ItemProductBinding
-import com.jlndev.facaseupedido.ui.home.adapter.model.ProductItem
+import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
 
 class ProductAdapter(
     private val productAdapterListener: ProductAdapterListener
@@ -23,8 +24,7 @@ class ProductAdapter(
         override fun bind(item: ProductItem) {
             with(itemBinding) {
                 itemTitleView.text = item.title
-                itemDescriptionView.text = item.description
-                itemPriceView.text = item.price.toString()
+                itemPriceView.text = item.price.toCurrency()
                 itemImageview.loadImage(item.image)
                 addCartView.setOnClickListener {
                     productAdapterListener.addProcutToCart(item)
@@ -34,6 +34,6 @@ class ProductAdapter(
     }
 
     interface ProductAdapterListener : BaseAdapterListener<ProductItem> {
-        fun addProcutToCart(productItem :ProductItem)
+        fun addProcutToCart(productItem : ProductItem)
     }
 }

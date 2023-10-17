@@ -13,4 +13,14 @@
         <item name="android:background">@drawable/background_button_black</item>
     </style>
 
+    <style name="Style.Button.Black.ItemProduct" parent="android:Widget.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/background_button_item_product_black</item>
+    </style>
+
+    <style name="Style.Button.Black.Cart" parent="android:Widget.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/background_button_cart_black</item>
+    </style>
+
 </resources>

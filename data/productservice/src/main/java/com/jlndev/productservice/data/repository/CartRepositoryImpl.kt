@@ -17,16 +17,21 @@ class CartRepositoryImpl(
             .onErrorResumeNext { _ -> Single.just(listOf()) }
     }
 
-    override fun insertProductItem(productItemModel: ProductItemModel): Completable {
+    override fun insertProductItem(productItemModel: ProductItemModel): Single<ProductItemModel> {
         return cartDao.insertProductItem(productItemModel.toCartProductItemEntity())
+            .andThen(Single.just(productItemModel))
+            .onErrorResumeNext { Single.error(it) }
     }
 
-    override fun deleteProductItem(productItemModel: ProductItemModel): Completable {
+    override fun deleteProductItem(productItemModel: ProductItemModel): Single<ProductItemModel> {
         return cartDao.deleteProductItem(productItemModel.id)
+            .andThen(Single.just(productItemModel))
+            .onErrorResumeNext { Single.error(it) }
     }
 
-    override fun deleteAllProductsItems(): Completable {
+    override fun deleteAllProductsItems(): Single<List<ProductItemModel>> {
         return cartDao.deleteAllProductsItems()
+            .andThen(Single.just(listOf()))
     }
 
     override fun getProductItem(productItemModel: ProductItemModel): Single<ProductItemModel> {

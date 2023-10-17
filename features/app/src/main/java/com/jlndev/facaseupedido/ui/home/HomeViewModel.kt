@@ -15,8 +15,7 @@ import com.jlndev.productservice.data.repository.model.ProductItemModel
 class HomeViewModel(
     private val schedulerProvider: BaseSchedulerProvider,
     private val productRepository: ProductRepository,
-    private val cartRepository: CartRepository,
-    private val orderHistoryRepository: OrderHistoryRepository
+    private val cartRepository: CartRepository
 ) : BaseViewModel() {
 
     private val _productsItemsLive = MutableLiveData<ResponseState<List<ProductItemModel>>>()

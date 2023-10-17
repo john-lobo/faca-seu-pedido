@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/itemRepositoryView"
+    android:layout_margin="@dimen/dimen_08dp"
+    android:background="@drawable/background_item"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="@dimen/dimen_12dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/itemCardImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_120dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/dimen_60dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/itemImageview"
+            android:layout_width="@dimen/dimen_120dp"
+            android:layout_height="@dimen/dimen_120dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:scaleType="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/itemTitleView"
+        android:layout_width="@dimen/match_constraints"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_08dp"
+        android:background="@color/white"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/itemPriceView"
+        app:layout_constraintEnd_toStartOf="@+id/itemDeleteProductToCartView"
+        app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
+        app:layout_constraintTop_toTopOf="@+id/itemCardImageView"
+        tools:text="Titulo" />
+
+    <TextView
+        android:id="@+id/itemPriceView"
+        android:layout_width="@dimen/match_constraints"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_08dp"
+        android:layout_marginTop="@dimen/dimen_08dp"
+        android:background="@color/white"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        android:textSize="@dimen/dimen_18sp"
+        app:layout_constraintBottom_toTopOf="@+id/itemQuantityView"
+        app:layout_constraintEnd_toStartOf="@+id/itemDeleteProductToCartView"
+        app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
+        app:layout_constraintTop_toBottomOf="@+id/itemTitleView"
+        tools:text="R$ 100,00" />
+
+    <TextView
+        android:id="@+id/itemQuantityView"
+        android:layout_width="@dimen/match_constraints"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_08dp"
+        android:layout_marginTop="@dimen/dimen_04dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingVertical="@dimen/dimen_08dp"
+        android:textAllCaps="true"
+        android:textColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/itemCardImageView"
+        app:layout_constraintEnd_toStartOf="@+id/itemDeleteProductToCartView"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
+        app:layout_constraintTop_toBottomOf="@+id/itemPriceView"
+        tools:text="QUANTIDADE: " />
+
+    <ImageView
+        android:id="@+id/itemDeleteProductToCartView"
+        android:layout_width="@dimen/dimen_48dp"
+        android:layout_height="@dimen/dimen_48dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="@dimen/dimen_08dp"
+        android:src="@drawable/ic_trash_black"
+        app:layout_constraintBottom_toBottomOf="@+id/itemCardImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemCardImageView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

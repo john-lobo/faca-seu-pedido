@@ -1,5 +1,6 @@
 package com.jlndev.facaseupedido.ui.home
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,11 @@ import com.jlndev.coreandroid.ext.showSnackbar
 import com.jlndev.coreandroid.ext.visible
 import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentHomeBinding
-import com.jlndev.facaseupedido.ui.components.QuantityInputDialog
+import com.jlndev.facaseupedido.ui.uitls.components.QuantityInputDialog
 import com.jlndev.facaseupedido.ui.home.adapter.ProductAdapter
-import com.jlndev.facaseupedido.ui.home.adapter.ext.toProductItem
-import com.jlndev.facaseupedido.ui.home.adapter.ext.toProductItemModel
-import com.jlndev.facaseupedido.ui.home.adapter.model.ProductItem
+import com.jlndev.facaseupedido.ui.uitls.ext.toProductItem
+import com.jlndev.facaseupedido.ui.uitls.ext.toProductItemModel
+import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
@@ -97,9 +98,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun showLoading() {
-        binding.loadingView.visible()
-        binding.recyclerProductItemsView.gone()
-        binding.errorView.root.gone()
+        with(binding) {
+            loadingView.visible()
+            recyclerProductItemsView.gone()
+            errorView.root.gone()
+        }
     }
 
     override fun hideLoading() {
@@ -107,13 +110,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun showView() {
-        binding.errorView.root.gone()
-        binding.recyclerProductItemsView.visible()
+        with(binding) {
+            errorView.root.gone()
+            recyclerProductItemsView.visible()
+        }
     }
 
     override fun showErrorView() {
-        binding.recyclerProductItemsView.gone()
-        binding.errorView.root.visible()
+        with(binding) {
+            recyclerProductItemsView.gone()
+            errorView.root.visible()
+            errorView.retryButton.setOnClickListener {
+                viewModel.getProductsItems()
+            }
+        }
     }
 
     private fun navToCart() {

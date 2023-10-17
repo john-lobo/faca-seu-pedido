@@ -19,6 +19,19 @@ abstract class BaseAdapterController<MODEL : BaseDiffItemView, VH : BaseViewHold
         }
     }
 
+    fun updateItem(newItem: MODEL) {
+        val newItems = items.toMutableList()
+
+        for ((index, item) in newItems.withIndex()) {
+            if (item.id == newItem.id) {
+                newItems[index] = newItem
+                submitList(newItems)
+                notifyItemChanged(index)
+                return
+            }
+        }
+    }
+
     fun clear() {
         submitList(emptyList())
     }

@@ -60,21 +60,6 @@
             tools:text="Bicicleta" />
 
         <TextView
-            android:id="@+id/itemDescriptionView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_08dp"
-            android:background="@color/white"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemTitleView"
-            tools:text="Bicicleta BTT 100 Amarelo Rockrider" />
-
-        <TextView
             android:id="@+id/itemPriceView"
             android:layout_width="@dimen/match_constraints"
             android:layout_height="wrap_content"
@@ -82,16 +67,19 @@
             android:background="@color/white"
             android:textAllCaps="true"
             android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/dimen_18sp"
+            android:textColor="@color/green"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemDescriptionView"
+            app:layout_constraintTop_toBottomOf="@+id/itemTitleView"
             tools:text="R$ 1.199,99" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addCartView"
-        style="@style/Style.Button.Black"
+        style="@style/Style.Button.Black.ItemProduct"
         android:layout_width="@dimen/match_constraints"
         android:layout_height="wrap_content"
         android:text="Add ao carrinho"
@@ -99,15 +87,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/loadingView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/black"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

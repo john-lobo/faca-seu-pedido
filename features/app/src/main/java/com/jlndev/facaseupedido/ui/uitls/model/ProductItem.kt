@@ -1,4 +1,4 @@
-package com.jlndev.facaseupedido.ui.home.adapter.model
+package com.jlndev.facaseupedido.ui.uitls.model
 
 import com.jlndev.coreandroid.bases.adapter.BaseDiffItemView
 
