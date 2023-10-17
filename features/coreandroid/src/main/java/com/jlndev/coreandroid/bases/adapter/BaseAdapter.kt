@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseAdapter<MODEL : BaseDiffItemView, VH : BaseViewHolder<MODEL>, LISTENER : BaseAdapterListener<MODEL>>(
-    open var listener: LISTENER
+    open var listener: LISTENER?
 ) : RecyclerView.Adapter<VH>() {
 
     protected var items: List<MODEL> = emptyList()
@@ -13,9 +13,12 @@ abstract class BaseAdapter<MODEL : BaseDiffItemView, VH : BaseViewHolder<MODEL>,
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(items[position])
-        holder.itemView.setOnClickListener {
-            listener.onAdapterItemClicked(position, items[position], holder.itemView)
+        listener?.let { listener ->
+            holder.itemView.setOnClickListener {
+                listener.onAdapterItemClicked(position, items[position], holder.itemView)
+            }
         }
+
     }
 
     open fun submitList(newItems: List<MODEL>) {

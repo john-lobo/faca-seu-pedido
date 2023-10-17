@@ -6,7 +6,7 @@ import android.text.InputType
 import android.widget.EditText
 import com.jlndev.facaseupedido.R
 
-class QuantityInputDialog(private val context: Context, private val  quantity: Int? = null) {
+class QuantityInputDialog(private val context: Context, private val  quantity: Int = 1) {
     fun show(onQuantityEntered: (Int) -> Unit) {
         val builder = AlertDialog.Builder(context)
         builder.setTitle(context.getString(R.string.informe_quantity))
@@ -14,9 +14,7 @@ class QuantityInputDialog(private val context: Context, private val  quantity: I
         val input = EditText(context)
         input.hint = context.getString(R.string.quantity)
         input.inputType = InputType.TYPE_CLASS_NUMBER
-        quantity?.let {
-            input.setText(it.toString())
-        }
+        input.setText(quantity.toString())
         builder.setView(input)
 
         builder.setPositiveButton(context.getString(R.string.ok)) { dialog, _ ->

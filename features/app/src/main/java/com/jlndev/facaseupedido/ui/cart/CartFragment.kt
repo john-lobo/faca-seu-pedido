@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.widget.Toolbar
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.gone
@@ -87,6 +86,14 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                     is ResponseState.Error -> {
                         showErrorView()
                     }
+                }
+            }
+
+            productsItemsLoadingLive.observe(viewLifecycleOwner) {
+                if(it) {
+                    showLoading()
+                } else {
+                    hideLoading()
                 }
             }
 
@@ -253,13 +260,12 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
     }
 
     private fun showClearList(show: Boolean) {
-        val toolbar = (requireActivity() as MainActivity).findViewById<Toolbar>(R.id.toolbar)
-        toolbar.findViewById<ImageView>(R.id.clearCartView).apply {
+        (requireActivity() as MainActivity).findViewById<ImageView>(R.id.clearCartView).apply {
             setOnClickListener {
                 showConfirmClearCart()
             }
 
-            if(cartProductAdapter.getProductItems().isNotEmpty() && show) {
+            if (cartProductAdapter.getProductItems().isNotEmpty() && show) {
                 visible()
             } else {
                 gone()

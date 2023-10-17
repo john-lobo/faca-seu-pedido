@@ -9,7 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 fun View.visible(animate: Boolean = false) {
     if(animate) {
         val fadeIn = ObjectAnimator.ofFloat(this, "alpha", 0f, 1f)
-        fadeIn.duration = 150
+        fadeIn.duration = 300
         fadeIn.addUpdateListener { _ ->
             visibility = View.VISIBLE
         }
@@ -22,7 +22,7 @@ fun View.visible(animate: Boolean = false) {
 fun View.gone(animate: Boolean = false) {
     if(animate) {
         val fadeOut = ObjectAnimator.ofFloat(this, "alpha", 1f, 0f)
-        fadeOut.duration = 150
+        fadeOut.duration = 300
         fadeOut.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 visibility = View.GONE

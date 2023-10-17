@@ -15,26 +15,32 @@ class OrderHistoryRepositoryImpl(
 ) : OrderHistoryRepository {
 
     override fun getAllOrders(): Single<List<OrderHistoryItemModel>> {
-        return orderHistoryDao.getAllOrders().flatMap { response ->
-            Single.fromCallable {
-                response.map { orderHistory ->
-                    val order = Gson().fromJson(orderHistory.order, Array<ProductItemModel>::class.java).asList()
-                    OrderHistoryItemModel(
-                        orderHistory.id,
-                        order,
-                        orderHistory.totalValue
-                    )
+        return orderHistoryDao.getAllOrders()
+            .flatMap { response ->
+                Single.fromCallable {
+                    response.map { orderHistory ->
+                        val order =
+                            Gson().fromJson(orderHistory.order, Array<ProductItemModel>::class.java)
+                                .asList()
+                        OrderHistoryItemModel(
+                            orderHistory.id,
+                            order,
+                            orderHistory.quantityItems,
+                            orderHistory.totalValue
+                        )
+                    }
                 }
             }
-        }.onErrorResumeNext {
-            Single.just(emptyList())
-        }
+            .onErrorResumeNext {
+                Single.error(it)
+            }
     }
 
     override fun insertOrder(productsItems: List<ProductItemModel>): Completable {
         val orderItem = Gson().toJson(productsItems)
         val totalValue = productsItems.sumOf { it.price * it.quantity }
-        return orderHistoryDao.insertOrder(OrderHistoryEntity(order = orderItem, totalValue = totalValue))
+        val quantityItems = productsItems.sumOf { it.quantity }
+        return orderHistoryDao.insertOrder(OrderHistoryEntity(order = orderItem, quantityItems = quantityItems, totalValue = totalValue))
             .andThen(cartDao.deleteAllProductsItems())
     }
 }

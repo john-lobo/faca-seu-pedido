@@ -40,4 +40,9 @@
     <string name="create_order">Pedido realizar com sucesso</string>
     <string name="total_items_in_cart">%1$d itens</string>
     <string name="quantity_label">Quantidade: %1$d</string>
+    <string name="orders_history_not_found">Voce não possui historico de pedidos</string>
+
+    <string name="order_id">ID do pedido: %1$s</string>
+    <string name="order_total_price">Valor total: %1$s</string>
+    <string name="order_quantity">Quantidade de itens: %1$d</string>
 </resources>

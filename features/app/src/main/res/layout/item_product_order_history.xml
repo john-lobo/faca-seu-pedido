@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemRepositoryView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_08dp"
@@ -44,10 +45,10 @@
         android:textAllCaps="true"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/itemQuantityView"
-        app:layout_constraintEnd_toStartOf="@+id/itemDeleteProductToCartView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemCardImageView"
         tools:text="Titulo" />
 
     <TextView
@@ -59,10 +60,10 @@
         android:background="@color/white"
         android:textAllCaps="true"
         android:textColor="@color/green"
-        android:textSize="@dimen/dimen_18sp"
+        android:textSize="@dimen/dimen_16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/itemDeleteProductToCartView"
+        app:layout_constraintBottom_toBottomOf="@+id/itemCardImageView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
         app:layout_constraintTop_toBottomOf="@+id/itemQuantityView"
@@ -73,28 +74,16 @@
         android:layout_width="@dimen/match_constraints"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dimen_08dp"
+        android:background="@color/white"
         android:layout_marginTop="@dimen/dimen_04dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:paddingVertical="@dimen/dimen_08dp"
         android:textAllCaps="true"
-        android:textColor="@color/blue"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/itemPriceView"
-        app:layout_constraintEnd_toStartOf="@+id/itemDeleteProductToCartView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
         app:layout_constraintTop_toBottomOf="@+id/itemTitleView"
         tools:text="QUANTIDADE: " />
-
-    <ImageView
-        android:id="@+id/itemDeleteProductToCartView"
-        android:layout_width="@dimen/dimen_48dp"
-        android:layout_height="@dimen/dimen_48dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:padding="@dimen/dimen_08dp"
-        android:src="@drawable/ic_trash_black"
-        app:layout_constraintBottom_toBottomOf="@+id/itemCardImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/itemCardImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

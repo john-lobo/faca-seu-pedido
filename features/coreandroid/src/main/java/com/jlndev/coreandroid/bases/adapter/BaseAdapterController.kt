@@ -1,7 +1,7 @@
 package com.jlndev.coreandroid.bases.adapter
 
 abstract class BaseAdapterController<MODEL : BaseDiffItemView, VH : BaseViewHolder<MODEL>, LISTENER : BaseAdapterListener<MODEL>>(
-    listener: LISTENER
+    listener: LISTENER? = null
 ) : BaseAdapter<MODEL, VH, LISTENER>(listener) {
 
     fun addItem(item: MODEL) {

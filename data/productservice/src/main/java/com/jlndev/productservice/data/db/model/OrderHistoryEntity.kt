@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "OrderHistoryTable")
 class OrderHistoryEntity (
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 1,
+    val id: Long = 0,
     val order: String,
+    val quantityItems: Int,
     val totalValue: Double
 )
