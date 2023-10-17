@@ -90,7 +90,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                 when(it) {
                     is ResponseState.Success -> {
                         val items = it.data.map { it.toProductItem() }
-                        cartProductAdapter.submiListProductItems(items)
+                        cartProductAdapter.submitListProductItems(items)
                         if(items.isNotEmpty()) {
                             showView()
                         } else {
@@ -150,7 +150,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                 it?.let {
                     when(it) {
                         is ResponseState.Success -> {
-                            cartProductAdapter.submiListProductItems(listOf())
+                            cartProductAdapter.submitListProductItems(listOf())
                             showViewSuccessOrder()
                         }
                         is ResponseState.Error -> {

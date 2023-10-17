@@ -2,8 +2,6 @@ package com.jlndev.facaseupedido.ui.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.fragment.BaseBottomSheetFragment
 import com.jlndev.coreandroid.ext.getTypedParcelable
@@ -84,27 +82,20 @@ class DetailsFragment: BaseBottomSheetFragment<FragmentDetailsBinding, DetailsVi
         }
     }
 
-    private fun navToCart() {
-        val navOptions: NavOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.nav_home, inclusive = false, saveState = true)
-            .setRestoreState(true)
-            .build()
-        findNavController().navigate(R.id.nav_cart, null, navOptions)
-    }
 
     override fun showLoading() {
-//        TODO("Not yet implemented")
+        // nothing
     }
 
     override fun hideLoading() {
-//        TODO("Not yet implemented")
+        // nothing
     }
 
     override fun showView() {
-//        TODO("Not yet implemented")
+        // nothing
     }
 
     override fun showErrorView() {
-//        TODO("Not yet implemented")
+        // nothing
     }
 }

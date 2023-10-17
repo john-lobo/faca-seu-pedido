@@ -37,15 +37,25 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
                 findNavController().navigate(R.id.action_order_history_to_details, bundleOf(DetailsFragment.KEY_PRODUCT_ITEM to item, DetailsFragment.KEY_SHOW_BUTTON to false))
             }
         })
-        binding.recyclerOrdersHistoryItemsView.adapter = orderHistoryAdapter
+        with(binding) {
+            recyclerOrdersHistoryItemsView.adapter = orderHistoryAdapter
+            notFoundOrderHistoryView.retryButton.setOnClickListener {
+                navToHome()
+            }
+            errorView.retryButton.setOnClickListener {
+                viewModel.getAllOrders()
+            }
+        }
     }
 
     override fun onInitViewModel() {
         viewModel.getOrdersHistoryLive.observe(viewLifecycleOwner) {
             when(it) {
                 is ResponseState.Success -> {
-                    if(it.data.isNotEmpty()) {
-                        orderHistoryAdapter.submitList(it.data.map { it.toOrderHistoryItem() })
+                    val items = it.data.map { it.toOrderHistoryItem() }
+                    orderHistoryAdapter.submitList(items)
+                    if(items.isNotEmpty()) {
+                       showView()
                     } else {
                         showNotFoundOrdersHistoryView()
                     }
@@ -87,5 +97,9 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
             recyclerOrdersHistoryItemsView.gone()
             notFoundOrderHistoryView.root.visible()
         }
+    }
+
+    private fun navToHome() {
+        requireActivity().supportFragmentManager.popBackStackImmediate()
     }
 }

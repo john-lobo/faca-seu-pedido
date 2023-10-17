@@ -41,7 +41,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 findNavController().navigate(R.id.action_home_to_details, bundleOf(KEY_PRODUCT_ITEM to item))
             }
 
-            override fun addProcutToCart(productItem: ProductItem) {
+            override fun addProductToCart(productItem: ProductItem) {
                 QuantityInputDialog(requireContext()).show { quantity ->
                     productItem.quantity = quantity
                     viewModel.addProductToCart(productItem.toProductItemModel())

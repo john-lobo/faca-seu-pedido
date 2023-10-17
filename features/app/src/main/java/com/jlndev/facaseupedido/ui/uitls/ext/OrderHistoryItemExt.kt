@@ -8,5 +8,6 @@ fun OrderHistoryItemModel.toOrderHistoryItem(): OrderHistoryItem {
         id.toString(),
         productsItems.map { it.toProductItem() },
         quantityItems,
-        totalValue)
+        totalValue
+    )
 }

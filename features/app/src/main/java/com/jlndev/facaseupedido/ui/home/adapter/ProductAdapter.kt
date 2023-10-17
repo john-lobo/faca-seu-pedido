@@ -27,13 +27,13 @@ class ProductAdapter(
                 itemPriceView.text = item.price.toCurrency()
                 itemImageview.loadImage(item.image)
                 addCartView.setOnClickListener {
-                    productAdapterListener.addProcutToCart(item)
+                    productAdapterListener.addProductToCart(item)
                 }
             }
         }
     }
 
     interface ProductAdapterListener : BaseAdapterListener<ProductItem> {
-        fun addProcutToCart(productItem : ProductItem)
+        fun addProductToCart(productItem : ProductItem)
     }
 }

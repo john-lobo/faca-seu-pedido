@@ -42,7 +42,7 @@ class CartProductAdapter(
         return items
     }
 
-    fun submiListProductItems(productItems :List<ProductItem>) {
+    fun submitListProductItems(productItems :List<ProductItem>) {
         submitList(productItems)
         cartProductAdapterListener.totalValueProductToCart(items.sumOf { it.price * it.quantity })
     }
@@ -54,11 +54,6 @@ class CartProductAdapter(
 
     fun updateProductItem(productItem: ProductItem){
         updateItem(productItem)
-        cartProductAdapterListener.totalValueProductToCart(items.sumOf { it.price * it.quantity })
-    }
-
-    fun clearProducts() {
-        clear()
         cartProductAdapterListener.totalValueProductToCart(items.sumOf { it.price * it.quantity })
     }
 

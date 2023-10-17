@@ -19,7 +19,6 @@ class OrderHistoryViewModel(
     val getOrdersHistoryLive : LiveData<ResponseState<List<OrderHistoryItemModel>>>
         get() = _getOrdersHistoryLive
 
-
     fun getAllOrders () {
         orderHistoryRepository.getAllOrders()
             .processSingle(schedulerProvider)
