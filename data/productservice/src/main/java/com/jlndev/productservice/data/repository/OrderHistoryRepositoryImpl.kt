@@ -39,8 +39,8 @@ class OrderHistoryRepositoryImpl(
     override fun insertOrder(productsItems: List<ProductItemModel>): Completable {
         val orderItem = Gson().toJson(productsItems)
         val totalValue = productsItems.sumOf { it.price * it.quantity }
-        val quantityItems = productsItems.sumOf { it.quantity }
-        return orderHistoryDao.insertOrder(OrderHistoryEntity(order = orderItem, quantityItems = quantityItems, totalValue = totalValue))
+        val quantityItems = productsItems.size
+        return orderHistoryDao.insertOrder(OrderHistoryEntity(order = orderItem, quantityItems = quantityItems.toInt(), totalValue = totalValue))
             .andThen(cartDao.deleteAllProductsItems())
     }
 }

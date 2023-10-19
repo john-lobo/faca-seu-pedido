@@ -27,7 +27,7 @@ class OrderHistoryProductAdapter(
                 itemTitleView.text = item.title
                 itemPriceView.text = item.price.toCurrency()
                 itemImageview.loadImage(item.image)
-                itemQuantityView.text = root.context.getString(R.string.quantity_label, item.quantity)
+                itemQuantityView.text = root.context.getString(R.string.quantity_label, item.quantity.toString())
             }
         }
     }

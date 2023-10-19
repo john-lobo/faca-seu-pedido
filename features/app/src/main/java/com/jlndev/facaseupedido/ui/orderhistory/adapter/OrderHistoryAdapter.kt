@@ -28,7 +28,7 @@ class OrderHistoryAdapter(
             with(itemBinding) {
                 itemOrderIdView.text = root.context.getString(R.string.order_id, item.id)
                 itemOrderTotalPriceView.text = root.context.getString(R.string.order_total_price, item.totalValue.toCurrency())
-                itemOrderProductsQuantityView.text  = root.context.getString(R.string.order_quantity, item.quantityItems)
+                itemOrderProductsQuantityView.text  = root.context.getString(R.string.order_quantity, item.quantityItems.toString())
                 recyclerProductItemsView.adapter = OrderHistoryProductAdapter(object : BaseAdapterListener<ProductItem>{
                     override fun onAdapterItemClicked(
                         position: Int,

@@ -12,7 +12,7 @@ fun ProductItemResponse.toProductItemModel(): ProductItemModel {
         description.orEmpty(),
         price ?: 0.0,
         image.orEmpty(),
-        0
+        0.0
     )
 }
 

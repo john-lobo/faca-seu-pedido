@@ -18,7 +18,6 @@ abstract class BaseAdapter<MODEL : BaseDiffItemView, VH : BaseViewHolder<MODEL>,
                 listener.onAdapterItemClicked(position, items[position], holder.itemView)
             }
         }
-
     }
 
     open fun submitList(newItems: List<MODEL>) {

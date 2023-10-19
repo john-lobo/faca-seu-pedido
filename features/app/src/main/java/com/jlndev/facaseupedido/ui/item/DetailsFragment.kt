@@ -52,16 +52,17 @@ class DetailsFragment: BaseBottomSheetFragment<FragmentDetailsBinding, DetailsVi
                 itemQuantityView.gone()
                 addCartView.setOnClickListener {
                     QuantityInputDialog(requireContext()).show { quantity ->
-                        item.quantity = quantity
-                        viewModel.addProductToCart(item.toProductItemModel())
+                        if(quantity > 0) {
+                            item.quantity = quantity
+                            viewModel.addProductToCart(item.toProductItemModel())
+                        }
                     }
                 }
             } else {
                 itemQuantityView.visible()
-                itemQuantityView.text = root.context.getString(R.string.quantity_label, item.quantity)
+                itemQuantityView.text = root.context.getString(R.string.quantity_label, item.quantity.toString())
                 addCartView.gone()
             }
-
         }
     }
 

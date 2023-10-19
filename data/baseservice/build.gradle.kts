@@ -55,9 +55,6 @@ dependencies {
     // Koin
     val koinVersion = "3.3.1"
     api("io.insert-koin:koin-android:$koinVersion")
-    api("io.insert-koin:koin-android-compat:$koinVersion")
-    api("io.insert-koin:koin-androidx-workmanager:$koinVersion")
-    api("io.insert-koin:koin-androidx-navigation:$koinVersion")
 
     // RxJava
     api("io.reactivex.rxjava2:rxjava:2.2.21")

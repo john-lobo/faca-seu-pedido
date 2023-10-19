@@ -5,7 +5,6 @@ import com.jlndev.productservice.data.db.dao.CartDao
 import com.jlndev.productservice.data.repository.ext.toCartProductItemEntity
 import com.jlndev.productservice.data.repository.ext.toCartProductItemModel
 import com.jlndev.productservice.data.repository.model.ProductItemModel
-import io.reactivex.Completable
 import io.reactivex.Single
 
 class CartRepositoryImpl(

@@ -11,5 +11,5 @@ data class ProductItemEntity(
     val description: String,
     val price: Double,
     val image: String,
-    var quantity: Int = 1
+    var quantity: Double = 1.0
 )

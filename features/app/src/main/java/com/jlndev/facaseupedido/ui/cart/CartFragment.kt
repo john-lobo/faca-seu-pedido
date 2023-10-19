@@ -61,7 +61,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
             override fun totalValueProductToCart(totalValue: Double) {
                 val totalItemsInCart = cartProductAdapter.getProductItems().sumOf { it.quantity }
                 binding.confirmOrderView.totalValueView.text = totalValue.toCurrency()
-                binding.confirmOrderView.quantityValueView.text = getString(R.string.total_items_in_cart, totalItemsInCart)
+                binding.confirmOrderView.quantityValueView.text = totalItemsInCart.toString()
             }
         })
 
@@ -71,7 +71,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                 navToHome()
             }
             confirmOrderView.confirmOrderView.setOnClickListener {
-                showConfirmationDialog(binding.confirmOrderView.totalValueView.text.toString(), cartProductAdapter.getProductItems().sumOf { it.quantity })
+                showConfirmationDialog(binding.confirmOrderView.totalValueView.text.toString(), cartProductAdapter.getProductItems().size)
             }
 
             errorView.retryButton.setOnClickListener {
@@ -254,7 +254,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
     private fun showConfirmationDialog(totalValue: String, quantityItems: Int) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.confirmation_order))
-        val message = getString(R.string.confirm_order_message, totalValue, quantityItems)
+        val message = getString(R.string.confirm_order_message, totalValue, quantityItems.toString())
         builder.setMessage(message)
         builder.setPositiveButton(getString(R.string.confirm_order)) { dialog, which ->
             viewModel.insertOrder(cartProductAdapter.getProductItems().map { it.toProductItemModel() })

@@ -43,8 +43,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
             override fun addProductToCart(productItem: ProductItem) {
                 QuantityInputDialog(requireContext()).show { quantity ->
-                    productItem.quantity = quantity
-                    viewModel.addProductToCart(productItem.toProductItemModel())
+                    if(quantity > 0) {
+                        productItem.quantity = quantity
+                        viewModel.addProductToCart(productItem.toProductItemModel())
+                    }
                 }
             }
         })
