@@ -9,29 +9,16 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:padding="@dimen/dimen_12dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/itemCardImageView"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/itemImageview"
+        android:layout_width="@dimen/dimen_120dp"
         android:layout_height="@dimen/dimen_120dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/dimen_60dp"
-        app:cardElevation="0dp"
+        android:layout_gravity="center"
+        android:importantForAccessibility="no"
+        android:scaleType="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/itemImageview"
-            android:layout_width="@dimen/dimen_120dp"
-            android:layout_height="@dimen/dimen_120dp"
-            android:layout_gravity="center"
-            android:importantForAccessibility="no"
-            android:scaleType="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/itemTitleView"
@@ -46,7 +33,7 @@
         app:layout_constraintBottom_toTopOf="@+id/itemQuantityView"
         app:layout_constraintEnd_toStartOf="@+id/itemDeleteProductToCartView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
+        app:layout_constraintStart_toEndOf="@+id/itemImageview"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Titulo" />
 
@@ -64,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/itemDeleteProductToCartView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
+        app:layout_constraintStart_toEndOf="@+id/itemImageview"
         app:layout_constraintTop_toBottomOf="@+id/itemQuantityView"
         tools:text="R$ 100,00" />
 
@@ -82,7 +69,7 @@
         app:layout_constraintEnd_toStartOf="@+id/itemDeleteProductToCartView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
+        app:layout_constraintStart_toEndOf="@+id/itemImageview"
         app:layout_constraintTop_toBottomOf="@+id/itemTitleView"
         tools:text="QUANTIDADE: " />
 
@@ -92,9 +79,10 @@
         android:layout_height="@dimen/dimen_48dp"
         android:background="?android:attr/selectableItemBackground"
         android:padding="@dimen/dimen_08dp"
+        android:importantForAccessibility="no"
         android:src="@drawable/ic_trash_black"
-        app:layout_constraintBottom_toBottomOf="@+id/itemCardImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/itemImageview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/itemCardImageView" />
+        app:layout_constraintTop_toTopOf="@+id/itemImageview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

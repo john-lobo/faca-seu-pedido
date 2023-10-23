@@ -1,90 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_08dp"
-    android:foreground="?android:attr/selectableItemBackground"
     android:background="@drawable/background_item"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
     android:paddingTop="@dimen/dimen_12dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dimen_08dp"
-        app:layout_constraintBottom_toTopOf="@id/addCartView"
+    <ImageView
+        android:id="@+id/itemImageview"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_120dp"
+        android:layout_gravity="center"
+        android:importantForAccessibility="no"
+        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/itemCardImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen_120dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/dimen_08dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:id="@+id/itemTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_08dp"
+        android:background="@color/white"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemCardImageView"
+        tools:text="Bicicleta" />
 
-            <ImageView
-                android:id="@+id/itemImageview"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_120dp"
-                android:layout_gravity="center"
-                android:importantForAccessibility="no"
-                android:scaleType="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/itemTitleView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_08dp"
-            android:background="@color/white"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemCardImageView"
-            tools:text="Bicicleta" />
-
-        <TextView
-            android:id="@+id/itemPriceView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_08dp"
-            android:background="@color/white"
-            android:textAllCaps="true"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textSize="@dimen/dimen_18sp"
-            android:textColor="@color/green"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemTitleView"
-            tools:text="R$ 1.199,99" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/itemPriceView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_08dp"
+        android:background="@color/white"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/green"
+        android:textSize="@dimen/dimen_18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemTitleView"
+        tools:text="R$ 1.199,99" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addCartView"
         style="@style/Style.Button.Black.ItemProduct"
-        android:layout_width="@dimen/match_constraints"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add ao carrinho"
-        android:textAllCaps="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="@string/add_to_cart"
+        android:textAllCaps="true" />
+</LinearLayout>

@@ -63,6 +63,7 @@
         android:id="@+id/itemShowProductsImageView"
         android:layout_width="@dimen/dimen_48dp"
         android:layout_height="@dimen/dimen_48dp"
+        android:importantForAccessibility="no"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_arrow_down"
         app:layout_constraintBottom_toBottomOf="@+id/itemOrderTotalPriceView"

@@ -47,4 +47,7 @@
     <string name="order_quantity">Quantidade de itens: %1$s</string>
     <string name="decription">Descrição</string>
     <string name="success_order">Pedido realizado com sucesso! \nvocê pode visualizar AGORA seu pedido \nclicando no botão abaixo</string>
+    <string name="view_orders">Visualizar pedidos</string>
+    <string name="total">Total</string>
+    <string name="add_to_cart">Add ao carrinho</string>
 </resources>
