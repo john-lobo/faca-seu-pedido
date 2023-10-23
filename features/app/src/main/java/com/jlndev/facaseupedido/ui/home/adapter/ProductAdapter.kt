@@ -32,8 +32,4 @@ class ProductAdapter(
             }
         }
     }
-
-    interface ProductAdapterListener : BaseAdapterListener<ProductItem> {
-        fun addProductToCart(productItem : ProductItem)
-    }
 }

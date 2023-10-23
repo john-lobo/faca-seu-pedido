@@ -14,6 +14,7 @@ import com.jlndev.coreandroid.ext.visible
 import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentHomeBinding
 import com.jlndev.facaseupedido.ui.home.adapter.ProductAdapter
+import com.jlndev.facaseupedido.ui.home.adapter.ProductAdapterListener
 import com.jlndev.facaseupedido.ui.item.DetailsFragment.Companion.KEY_PRODUCT_ITEM
 import com.jlndev.facaseupedido.ui.uitls.components.QuantityInputDialog
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItem
@@ -36,7 +37,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     ): FragmentHomeBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
     override fun onInitViews() {
-        productAdapter = ProductAdapter(object : ProductAdapter.ProductAdapterListener {
+        productAdapter = ProductAdapter(object : ProductAdapterListener {
             override fun onAdapterItemClicked(position: Int, item: ProductItem, view: View?) {
                 findNavController().navigate(R.id.action_home_to_details, bundleOf(KEY_PRODUCT_ITEM to item))
             }

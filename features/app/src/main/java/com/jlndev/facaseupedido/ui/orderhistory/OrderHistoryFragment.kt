@@ -12,6 +12,7 @@ import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentOrderHistoryBinding
 import com.jlndev.facaseupedido.ui.item.DetailsFragment
 import com.jlndev.facaseupedido.ui.orderhistory.adapter.OrderHistoryAdapter
+import com.jlndev.facaseupedido.ui.orderhistory.adapter.OrderHistoryAdapterListener
 import com.jlndev.facaseupedido.ui.uitls.ext.toOrderHistoryItem
 import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,8 +32,7 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
     ): FragmentOrderHistoryBinding = FragmentOrderHistoryBinding.inflate(inflater, container, false)
 
     override fun onInitViews() {
-        orderHistoryAdapter = OrderHistoryAdapter(object :
-            OrderHistoryAdapter.OrderHistoryAdapterListener {
+        orderHistoryAdapter = OrderHistoryAdapter(object : OrderHistoryAdapterListener {
             override fun clickedProductItem(item: ProductItem) {
                 findNavController().navigate(R.id.action_order_history_to_details, bundleOf(DetailsFragment.KEY_PRODUCT_ITEM to item, DetailsFragment.KEY_SHOW_BUTTON to false))
             }

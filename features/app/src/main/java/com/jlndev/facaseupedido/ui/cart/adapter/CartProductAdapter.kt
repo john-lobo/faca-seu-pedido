@@ -29,10 +29,10 @@ class CartProductAdapter(
                 itemImageview.loadImage(item.image)
                 itemQuantityView.text = root.context.getString(R.string.quantity_label, item.quantity.toString())
                 itemQuantityView.setOnClickListener {
-                    cartProductAdapterListener.updateProcutToCart(item)
+                    cartProductAdapterListener.updateProductToCart(item)
                 }
                 itemDeleteProductToCartView.setOnClickListener {
-                    cartProductAdapterListener.deleteProcutToCart(item)
+                    cartProductAdapterListener.deleteProductToCart(item)
                 }
             }
         }
@@ -55,11 +55,5 @@ class CartProductAdapter(
     fun updateProductItem(productItem: ProductItem){
         updateItem(productItem)
         cartProductAdapterListener.totalValueProductToCart(items.sumOf { it.price * it.quantity })
-    }
-
-    interface CartProductAdapterListener : BaseAdapterListener<ProductItem> {
-        fun updateProcutToCart(productItem : ProductItem)
-        fun deleteProcutToCart(productItem : ProductItem)
-        fun totalValueProductToCart(totalValue: Double)
     }
 }

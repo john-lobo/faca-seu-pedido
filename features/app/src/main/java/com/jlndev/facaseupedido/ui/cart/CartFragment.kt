@@ -18,6 +18,7 @@ import com.jlndev.facaseupedido.MainActivity
 import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentCartBinding
 import com.jlndev.facaseupedido.ui.cart.adapter.CartProductAdapter
+import com.jlndev.facaseupedido.ui.cart.adapter.CartProductAdapterListener
 import com.jlndev.facaseupedido.ui.item.DetailsFragment
 import com.jlndev.facaseupedido.ui.item.DetailsFragment.Companion.KEY_SHOW_BUTTON
 import com.jlndev.facaseupedido.ui.uitls.components.QuantityInputDialog
@@ -38,12 +39,12 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
     override fun onGetViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCartBinding = FragmentCartBinding.inflate(inflater, container, false)
 
     override fun onInitViews() {
-        cartProductAdapter = CartProductAdapter(object : CartProductAdapter.CartProductAdapterListener {
+        cartProductAdapter = CartProductAdapter(object : CartProductAdapterListener {
             override fun onAdapterItemClicked(position: Int, item: ProductItem, view: View?) {
                 findNavController().navigate(R.id.action_cart_to_details, bundleOf(DetailsFragment.KEY_PRODUCT_ITEM to item, KEY_SHOW_BUTTON to false))
             }
 
-            override fun updateProcutToCart(productItem: ProductItem) {
+            override fun updateProductToCart(productItem: ProductItem) {
                 QuantityInputDialog(requireContext(), productItem.quantity).show { quantity ->
                     if(quantity > 0) {
                         productItem.quantity = quantity
@@ -54,7 +55,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                 }
             }
 
-            override fun deleteProcutToCart(productItem: ProductItem) {
+            override fun deleteProductToCart(productItem: ProductItem) {
                 showConfirmDeletionProduct(productItem)
             }
 

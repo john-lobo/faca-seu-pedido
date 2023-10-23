@@ -63,8 +63,4 @@ class OrderHistoryAdapter(
             }
         }
     }
-
-    interface OrderHistoryAdapterListener {
-        fun clickedProductItem(item: ProductItem)
-    }
 }
