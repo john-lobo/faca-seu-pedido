@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/Style.Button.Black"
+    android:layout_margin="@dimen/dimen_16dp"
+    android:text="@string/confirm"
+    android:layout_gravity="center"
+    android:id="@+id/confirmButton" />

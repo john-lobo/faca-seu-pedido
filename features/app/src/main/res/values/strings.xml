@@ -50,4 +50,6 @@
     <string name="view_orders">Visualizar pedidos</string>
     <string name="total">Total</string>
     <string name="add_to_cart">Add ao carrinho</string>
+    <string name="inform_quantity">Informar quantidade</string>
+    <string name="confirm">Confirmar</string>
 </resources>

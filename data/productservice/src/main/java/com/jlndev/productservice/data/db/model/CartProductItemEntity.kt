@@ -11,5 +11,5 @@ data class CartProductItemEntity(
     val description: String,
     val price: Double,
     val image: String,
-    var quantity: Double = 1.0
+    var quantity: Long = 1
 )

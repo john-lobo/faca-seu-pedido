@@ -2,32 +2,32 @@ package com.jlndev.facaseupedido.ui.uitls.components
 
 import android.app.AlertDialog
 import android.content.Context
-import android.text.InputType
-import android.widget.EditText
+import android.view.LayoutInflater
 import com.jlndev.facaseupedido.R
+import com.jlndev.facaseupedido.databinding.ItemQuantityDialogBinding
 
-class QuantityInputDialog(private val context: Context, private val  quantity: Double = 1.0) {
-    fun show(onQuantityEntered: (Double) -> Unit) {
+class QuantityInputDialog(private val context: Context, private val quantity: Long = 1) {
+    fun show(onQuantityEntered: (Long) -> Unit) {
+        val binding = ItemQuantityDialogBinding.inflate(LayoutInflater.from(context))
         val builder = AlertDialog.Builder(context)
-        builder.setTitle(context.getString(R.string.informe_quantity))
 
-        val input = EditText(context)
-        input.hint = context.getString(R.string.quantity)
-        input.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        input.setText(quantity.toString())
-        builder.setView(input)
+        with(binding) {
+            builder.create().also { dialog ->
+                dialog.setView(binding.root)
+                titleDialogView.text = context.getString(R.string.inform_quantity)
+                quantityDialogView.setText(quantity.toString())
 
-        builder.setPositiveButton(context.getString(R.string.ok)) { dialog, _ ->
-            val quantityText = input.text.toString()
-            if (quantityText.isNotEmpty()) {
-                val quantity = quantityText.toDouble()
-                onQuantityEntered(quantity)
-                dialog.dismiss()
+                confirmDialogView.setOnClickListener {
+                    val quantityText = quantityDialogView.text.toString()
+                    if (quantityText.isNotEmpty()) {
+                        val quantity = quantityText.toLong()
+                        onQuantityEntered(quantity)
+                        dialog.dismiss()
+                    }
+                }
+                dialog.show()
             }
         }
-        builder.setNegativeButton(context.getString(R.string.cancel)) { dialog, _ ->
-            dialog.cancel()
-        }
-        builder.show()
     }
 }
+

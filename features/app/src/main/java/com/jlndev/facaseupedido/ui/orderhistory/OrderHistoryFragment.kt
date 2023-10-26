@@ -34,7 +34,13 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
     override fun onInitViews() {
         orderHistoryAdapter = OrderHistoryAdapter(object : OrderHistoryAdapterListener {
             override fun clickedProductItem(item: ProductItem) {
-                findNavController().navigate(R.id.action_order_history_to_details, bundleOf(DetailsFragment.KEY_PRODUCT_ITEM to item, DetailsFragment.KEY_SHOW_BUTTON to false))
+                findNavController().navigate(
+                    R.id.action_order_history_to_details,
+                    bundleOf(
+                        DetailsFragment.KEY_PRODUCT_ITEM to item,
+                        DetailsFragment.KEY_SHOW_BUTTON to false
+                    )
+                )
             }
         })
         with(binding) {
@@ -50,16 +56,17 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
 
     override fun onInitViewModel() {
         viewModel.getOrdersHistoryLive.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is ResponseState.Success -> {
                     val items = it.data.map { it.toOrderHistoryItem() }
                     orderHistoryAdapter.submitList(items)
-                    if(items.isNotEmpty()) {
-                       showView()
+                    if (items.isNotEmpty()) {
+                        showView()
                     } else {
                         showNotFoundOrdersHistoryView()
                     }
                 }
+
                 is ResponseState.Error -> {
                     showErrorView()
                 }
