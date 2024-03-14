@@ -1,4 +1,4 @@
-package com.jlndev.productservice.di
+package com.jlndev.di
 
 import com.jlndev.baseservice.network.NetworkProviders
 import com.jlndev.productservice.BuildConfig
@@ -11,6 +11,9 @@ import com.jlndev.productservice.data.repository.OrderHistoryRepositoryImpl
 import com.jlndev.productservice.data.repository.ProductRepository
 import com.jlndev.productservice.data.repository.ProductRepositoryImpl
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val productServiceModule = module {
