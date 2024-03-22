@@ -25,19 +25,16 @@ class HomeViewModel(
     val addProductToCartLive : LiveData<ResponseState<ProductItemModel>?>
         get() = _addProductToCartLive
 
-    private val _productsItemsLoadingLive = MutableLiveData<Boolean>()
-    val productsItemsLoadingLive: LiveData<Boolean>
-        get() = _productsItemsLoadingLive
-
     fun getProductsItems () {
         productRepository.getProductsItems()
             .processSingle(schedulerProvider)
-            .doOnSubscribe { _productsItemsLoadingLive.value = true }
-            .doFinally { _productsItemsLoadingLive.value = false }
+            .doOnSubscribe { _productsItemsLive.value = ResponseState.Loading(true)}
             .doOnSuccess {
+                _productsItemsLive.value = ResponseState.Loading(false)
                 _productsItemsLive.value = ResponseState.Success(it)
             }
             .doOnError {
+                _productsItemsLive.value = ResponseState.Loading(false)
                 _productsItemsLive.value = ResponseState.Error(it)
             }
             .disposedBy(disposables)

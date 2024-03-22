@@ -1,0 +1,35 @@
+<resources>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Bem Vindo</string>
+
+    <!--  hints  -->
+    <string name="full_name">Nome completo</string>
+    <string name="birthday">Data de nascimento</string>
+    <string name="cpf">CPF</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="confirm_password">Confirmação de senha</string>
+
+    <!--  masks  -->
+    <string name="mask_cpf">###.###.###-##</string>
+    <string name="mask_birthday">##/##/####</string>
+
+    <!--  token web para login com google  -->
+    <string name="your_web_client_id">1002549534048-rj12ortcrvggki8krenrqmiofntacfi1.apps.googleusercontent.com</string>
+
+    <!--  others  -->
+    <string name="enter">Entrar</string>
+    <string name="register">Cadastre-se</string>
+    <string name="register_button">Cadastrar</string>
+    <string name="our">ou</string>
+    <string name="forgot_password">Esqueceu a senha?</string>
+    <string name="has_no_record">É novo por aqui? <b>Faça seu cadastro</b></string>
+    <string name="login_as_guest">Entrar como visitante</string>
+    <string name="term_and_conditions_login">Ao criar uma conta, você concorda com nossos Termos de serviços e nossa Politica de privacidade.</string>
+    <string name="unknown_error">Erro desconhecido</string>
+    <string name="try_again">Tentar novamente</string>
+
+    <string name="login_to_continue">Faça o login para \ncontinuar nesta jornada</string>
+    <string name="account_exists_to_login">Já tem uma conta? <b>Faça o login</b></string>
+    <string name="description">Descrição</string>
+</resources>

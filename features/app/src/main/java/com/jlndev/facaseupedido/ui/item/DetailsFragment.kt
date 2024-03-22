@@ -78,6 +78,8 @@ class DetailsFragment: BaseBottomSheetFragment<FragmentDetailsBinding, DetailsVi
                         dismiss()
                         requireActivity().showSnackbar(getString(R.string.error_add_to_cart))
                     }
+
+                    else -> {}
                 }
             }
         }

@@ -59,6 +59,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         with(viewModel) {
             productsItemsLive.observe(viewLifecycleOwner) {
                 when (it) {
+                    is ResponseState.Loading -> {
+                        if (it.isLoading) {
+                            showLoading()
+                        } else {
+                            hideLoading()
+                        }
+                    }
                     is ResponseState.Success -> {
                         val productItems = it.data.map { it.toProductItem() }
                         productAdapter.submitList(productItems)
@@ -71,14 +78,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 }
             }
 
-            productsItemsLoadingLive.observe(viewLifecycleOwner) { isLoading ->
-                if (isLoading) {
-                    showLoading()
-                } else {
-                    hideLoading()
-                }
-            }
-
             addProductToCartLive.observe(viewLifecycleOwner) {
                 it?.let { state ->
                     when (state) {
@@ -88,10 +87,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                             }
                         }
                         is ResponseState.Error -> {
-                            requireView().showSnackbar(getString(R.string.error_add_to_cart), getString(R.string.try_again)) {
+                            requireView().showSnackbar(getString(R.string.error_add_to_cart), getString(
+                                com.jlndev.coreandroid.R.string.try_again)) {
                                 state.action?.invoke()
                             }
                         }
+
+                        else -> {}
                     }
                 }
             }

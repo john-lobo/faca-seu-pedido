@@ -3,7 +3,9 @@ package com.jlndev.coreandroid.ext
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 
@@ -66,4 +68,10 @@ fun FragmentActivity.showSnackbar(
         }
     }
     snackbar.show()
+}
+
+
+fun View.hideKeyboard() {
+    val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }

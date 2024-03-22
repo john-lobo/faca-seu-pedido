@@ -52,4 +52,13 @@ dependencies {
     //Gson
     val gsonVersion = "2.9.0"
     api ("com.google.code.gson:gson:$gsonVersion")
+
+    //firebase
+    api (platform("com.google.firebase:firebase-bom:31.2.3"))
+    api ("com.google.firebase:firebase-analytics-ktx")
+    api ("com.google.firebase:firebase-database-ktx")
+    api ("com.google.firebase:firebase-storage-ktx")
+    api ("com.google.firebase:firebase-auth-ktx")
+    api ("com.google.android.gms:play-services-auth:20.5.0")
+    api ("com.google.firebase:firebase-firestore-ktx")
 }

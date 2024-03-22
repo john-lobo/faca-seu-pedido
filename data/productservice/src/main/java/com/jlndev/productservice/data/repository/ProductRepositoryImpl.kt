@@ -2,8 +2,6 @@ package com.jlndev.productservice.data.repository
 
 import com.jlndev.productservice.data.api.ProductService
 import com.jlndev.productservice.data.db.dao.ProductShowcaseDao
-import com.jlndev.productservice.data.repository.ext.toProductItemEntity
-import com.jlndev.productservice.data.repository.ext.toProductItemModel
 import com.jlndev.productservice.data.repository.model.ProductItemModel
 import io.reactivex.Single
 

@@ -89,6 +89,13 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
         with(viewModel) {
             productsItemsLive.observe(viewLifecycleOwner) {
                 when(it) {
+                    is ResponseState.Loading -> {
+                        if(it.isLoading) {
+                            showLoading()
+                        } else {
+                            hideLoading()
+                        }
+                    }
                     is ResponseState.Success -> {
                         val items = it.data.map { it.toProductItem() }
                         cartProductAdapter.submitListProductItems(items)
@@ -104,14 +111,6 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                 }
             }
 
-            productsItemsLoadingLive.observe(viewLifecycleOwner) {
-                if(it) {
-                    showLoading()
-                } else {
-                    hideLoading()
-                }
-            }
-
             updateQuantityProductToCartLive.observe(viewLifecycleOwner) {
                 it?.let {
                     when(it) {
@@ -124,6 +123,8 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                                 it.action?.invoke()
                             }
                         }
+
+                        else -> {}
                     }
                 }
             }
@@ -143,6 +144,8 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                                 it.action?.invoke()
                             }
                         }
+
+                        else -> {}
                     }
                 }
             }
@@ -159,6 +162,8 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                                 it.action?.invoke()
                             }
                         }
+
+                        else -> {}
                     }
                 }
             }

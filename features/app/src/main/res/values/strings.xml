@@ -7,12 +7,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
     <string name="menu_cart">Carrinho</string>
     <string name="menu_order_history">Histórico de pedidos</string>
 
     <string name="generic_error">Ops! \nOcorreu um erro.</string>
-    <string name="try_again">Tentar Novamente</string>
     <string name="informe_quantity">Informe a quantidade</string>
     <string name="quantity">Quantidade</string>
     <string name="ok">OK</string>

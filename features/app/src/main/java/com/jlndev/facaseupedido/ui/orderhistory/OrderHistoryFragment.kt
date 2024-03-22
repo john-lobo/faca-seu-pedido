@@ -70,6 +70,8 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
                 is ResponseState.Error -> {
                     showErrorView()
                 }
+
+                else -> {}
             }
         }
     }

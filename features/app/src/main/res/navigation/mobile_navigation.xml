@@ -39,4 +39,58 @@
         android:id="@+id/nav_details"
         android:name="com.jlndev.facaseupedido.ui.item.DetailsFragment"
         tools:layout="@layout/fragment_details" />
+
+    <fragment
+        android:id="@+id/nav_register_user"
+        android:name="com.jlndev.facaseupedido.ui.register_user.RegisterUserFragment"
+        android:label="Cadastre-se"
+        tools:layout="@layout/fragment_register_user">
+
+        <action
+            android:id="@+id/action_register_user_to_login"
+            app:destination="@id/nav_login"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.jlndev.facaseupedido.ui.login.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" >
+
+        <action
+            android:id="@+id/action_login_to_home"
+            app:destination="@id/nav_home" />
+
+        <action
+            android:id="@+id/action_nav_login_to_nav_recover_password"
+            app:destination="@id/nav_recover_passoword"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+
+        <action
+            android:id="@+id/action_login_to_register_user"
+            app:destination="@id/nav_register_user"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_recover_passoword"
+        android:name="com.montapp.montapp.view.ui.recover_password.RecoverPasswordFragment"
+        android:label="Recuperar Senha"
+        tools:layout="@layout/fragment_recover_password">
+    </fragment>
 </navigation>

@@ -22,10 +22,6 @@ class CartViewModel(
     val productsItemsLive : LiveData<ResponseState<List<ProductItemModel>>>
         get() = _productsItemsLive
 
-    private val _productsItemsLoadingLive = MutableLiveData<Boolean>()
-    val productsItemsLoadingLive: LiveData<Boolean>
-        get() = _productsItemsLoadingLive
-
     private val _updateQuantityProductToCartLive = MutableLiveData<ResponseState<ProductItemModel>?>()
     val updateQuantityProductToCartLive : LiveData<ResponseState<ProductItemModel>?>
         get() = _updateQuantityProductToCartLive
@@ -41,12 +37,13 @@ class CartViewModel(
     fun getProductsItems() {
         cartRepository.getProductsItems()
             .processSingle(schedulerProvider)
-            .doOnSubscribe { _productsItemsLoadingLive.value = true }
-            .doFinally { _productsItemsLoadingLive.value = false }
+            .doOnSubscribe {  _productsItemsLive.value = ResponseState.Loading(true) }
             .doOnSuccess {
+                _productsItemsLive.value = ResponseState.Loading(false)
                 _productsItemsLive.value = ResponseState.Success(it)
             }
             .doOnError {
+                _productsItemsLive.value = ResponseState.Loading(false)
                 _productsItemsLive.value = ResponseState.Error(it)
             }
             .disposedBy(disposables)
@@ -85,12 +82,13 @@ class CartViewModel(
     fun deleteAllProductsItems() {
         cartRepository.deleteAllProductsItems()
             .processSingle(schedulerProvider)
-            .doOnSubscribe { _productsItemsLoadingLive.value = true }
-            .doFinally { _productsItemsLoadingLive.value = false }
+            .doOnSubscribe { _productsItemsLive.value = ResponseState.Loading(true) }
             .doOnSuccess {
+                _productsItemsLive.value = ResponseState.Loading(false)
                 _productsItemsLive.value = ResponseState.Success(it)
             }
             .doOnError {
+                _productsItemsLive.value = ResponseState.Loading(false)
                 _productsItemsLive.value = ResponseState.Error(it)
             }
             .disposedBy(disposables)
