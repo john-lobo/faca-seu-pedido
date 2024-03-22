@@ -4,6 +4,7 @@ import com.jlndev.baseservice.network.NetworkProviders
 import com.jlndev.productservice.BuildConfig
 import com.jlndev.productservice.data.api.ProductService
 import com.jlndev.productservice.data.db.database.ProductDataBase
+import com.jlndev.productservice.data.repository.CartRemoteRepository
 import com.jlndev.productservice.data.repository.CartRepository
 import com.jlndev.productservice.data.repository.CartRepositoryImpl
 import com.jlndev.productservice.data.repository.OrderHistoryRepository
@@ -22,6 +23,6 @@ val productServiceModule = module {
     single { ProductDataBase.getInstance(androidContext()).orderHistoryDao }
     single { ProductDataBase.getInstance(androidContext()).productShowcaseDao }
     single<ProductRepository> { ProductRepositoryImpl(get(),get()) }
-    single<CartRepository> { CartRepositoryImpl(get()) }
+    single<CartRepository> { CartRemoteRepository(get(), get()) }
     single<OrderHistoryRepository> { OrderHistoryRepositoryImpl(get(), get()) }
 }

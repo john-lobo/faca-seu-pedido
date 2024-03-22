@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.gone
@@ -20,9 +21,13 @@ import com.jlndev.facaseupedido.ui.uitls.components.QuantityInputDialog
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItem
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItemModel
 import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
+import com.jlndev.firebaseservice.data.user.UserSingleton
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
+
+    private val firebaseAuth: FirebaseAuth by inject()
 
     override val viewModel: HomeViewModel by viewModel()
     private lateinit var productAdapter: ProductAdapter
@@ -43,16 +48,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             }
 
             override fun addProductToCart(productItem: ProductItem) {
-                QuantityInputDialog(requireContext()).show { quantity ->
-                    if(quantity > 0) {
-                        productItem.quantity = quantity
-                        viewModel.addProductToCart(productItem.toProductItemModel())
+                firebaseAuth.currentUser?.let {
+                    QuantityInputDialog(requireContext()).show { quantity ->
+                        if(quantity > 0) {
+                            productItem.quantity = quantity
+                            viewModel.addProductToCart(productItem.toProductItemModel())
+                        }
                     }
+                } ?: run {
+                    findNavController().navigate(R.id.action_home_to_login)
                 }
             }
         })
 
         binding.recyclerProductItemsView.adapter = productAdapter
+
+        UserSingleton.getUser().observe(viewLifecycleOwner) {
+            it?.let {
+                binding.nomeLoginView.text = getString(R.string.welcome_user, it.name.split(" ")[0])
+            } ?: run {
+                binding.nomeLoginView.gone()
+            }
+        }
     }
 
     override fun onInitViewModel() {

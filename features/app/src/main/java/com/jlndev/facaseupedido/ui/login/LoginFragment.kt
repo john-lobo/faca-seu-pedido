@@ -28,6 +28,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
     override fun onInitData() {
 
     }
+
     override fun onGetViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -77,7 +78,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
                 }
                 is ResponseState.Success<User> -> {
                     hideLoading()
-                    showSuccess(it.data)
+                    showSuccess()
                 }
                 is ResponseState.Error -> {
                     hideLoading()
@@ -108,30 +109,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
     }
 
-    private fun showSuccess(user: User) {
-        firebaseAuth.currentUser?.let {
-            if(it.isEmailVerified) {
-                findNavController().navigate(R.id.action_login_to_home)
-            } else {
-                showAlert(user)
-            }
+    private fun showSuccess() {
+    firebaseAuth.currentUser?.let {
+            findNavController().navigate(R.id.action_login_to_home)
         }
-    }
-
-    private fun showAlert(user: User) {
-        DialogCustomView.Builder(mContext)
-            .setCanceledOnTouchOutside()
-            .setTitle("E-mail não verificado!")
-            .setSubtitle("Enviamos um e-mail para ${user.email} com um link verificação!")
-            .setPositiveButton("Enviar novamente") {
-                firebaseAuth.currentUser?.sendEmailVerification()
-                firebaseAuth.signOut()
-            }
-            .setNegativeButton("Já verifiquei meu e-mail!") {
-                firebaseAuth.signOut()
-            }
-            .build()
-            .show()
     }
 
     private fun requestLogin() {

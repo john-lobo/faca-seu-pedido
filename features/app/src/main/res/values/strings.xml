@@ -50,4 +50,5 @@
     <string name="add_to_cart">Add ao carrinho</string>
     <string name="inform_quantity">Informar quantidade</string>
     <string name="confirm">Confirmar</string>
+    <string name="welcome_user">Oi, %1$s ;)</string>
 </resources>

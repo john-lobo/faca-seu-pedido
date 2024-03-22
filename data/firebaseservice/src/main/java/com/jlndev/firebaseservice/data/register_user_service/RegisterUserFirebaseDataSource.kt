@@ -81,8 +81,6 @@ class RegisterUserFirebaseDataSource(
     }
 
     companion object {
-        const val LOGIN_NORMAL = "LOGIN_NORMAL"
-        const val LOGIN_GOOGLE = "LOGIN_GOOGLE"
         const val REGISTER_USER = "REGISTER_USER"
     }
 }

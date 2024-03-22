@@ -6,16 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <TextView
+        android:id="@+id/nomeLoginView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        android:background="@color/black"
+        android:textStyle="bold"
+        android:paddingBottom="@dimen/dimen_12dp"
+        android:paddingHorizontal="@dimen/dimen_12dp"
+        android:textSize="@dimen/dimen_18sp"
+        tools:text="Oi, John :)" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerProductItemsView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomeLoginView"
         app:spanCount="2"
         tools:itemCount="8"
         tools:listitem="@layout/item_product" />
