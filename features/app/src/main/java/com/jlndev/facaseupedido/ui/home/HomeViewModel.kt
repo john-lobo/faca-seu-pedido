@@ -46,12 +46,19 @@ class HomeViewModel(
             .doOnSuccess {
                 _addProductToCartLive.value = ResponseState.Success(it)
                 _addProductToCartLive.value = null
+                updateTotalAfterOperation()
             }
             .doOnError {
                 val callback = { addProductToCart(itemModel) }
                 _addProductToCartLive.value = ResponseState.Error(it, callback)
                 _addProductToCartLive.value = null
             }
+            .disposedBy(disposables)
+    }
+
+    private fun updateTotalAfterOperation() {
+        cartRepository.updateTotalAfterOperation()
+            .processSingle(schedulerProvider)
             .disposedBy(disposables)
     }
 }

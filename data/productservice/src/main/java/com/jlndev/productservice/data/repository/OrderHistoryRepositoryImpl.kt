@@ -11,7 +11,6 @@ import io.reactivex.Single
 
 class OrderHistoryRepositoryImpl(
     private val orderHistoryDao: OrderHistoryDao,
-    private val cartDao: CartDao,
 ) : OrderHistoryRepository {
 
     override fun getAllOrders(): Single<List<OrderHistoryItemModel>> {
@@ -41,6 +40,6 @@ class OrderHistoryRepositoryImpl(
         val totalValue = productsItems.sumOf { it.price * it.quantity }
         val quantityItems = productsItems.size
         return orderHistoryDao.insertOrder(OrderHistoryEntity(order = orderItem, quantityItems = quantityItems.toInt(), totalValue = totalValue))
-            .andThen(cartDao.deleteAllProductsItems())
+            .andThen(Completable.complete())
     }
 }

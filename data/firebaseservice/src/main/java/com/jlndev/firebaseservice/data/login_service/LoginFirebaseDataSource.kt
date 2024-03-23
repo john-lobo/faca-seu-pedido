@@ -5,8 +5,8 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jlndev.firebaseservice.model.ConfigFirebase.CHILD_EMAIL
-import com.jlndev.firebaseservice.model.ConfigFirebase.CHILD_USUARIOS
+import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_EMAIL
+import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_USERS
 import com.jlndev.firebaseservice.model.LoginError
 import com.jlndev.firebaseservice.model.LoginWithGoogleError
 import com.jlndev.firebaseservice.model.User
@@ -22,7 +22,7 @@ class LoginFirebaseDataSource(
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener { authResult ->
                     val userId = authResult.user?.uid ?: throw Exception("Failed to get user ID")
-                    firebaseFirestore.collection(CHILD_USUARIOS).document(userId).get()
+                    firebaseFirestore.collection(CHILD_USERS).document(userId).get()
                         .addOnSuccessListener { userSnapshot ->
                             val user = userSnapshot.toObject(User::class.java)
                             if (user != null) {
@@ -69,7 +69,7 @@ class LoginFirebaseDataSource(
                         val user = User(userId, userGoogle.displayName ?: "", userGoogle.email ?: "")
 
                         // Verificar se o usuário já existe no Firestore
-                        val usersCollection = firebaseFirestore.collection(CHILD_USUARIOS)
+                        val usersCollection = firebaseFirestore.collection(CHILD_USERS)
                         usersCollection.whereEqualTo(CHILD_EMAIL, user.email).get()
                             .addOnSuccessListener { querySnapshot ->
                                 if (!querySnapshot.isEmpty) {
@@ -123,7 +123,7 @@ class LoginFirebaseDataSource(
     }
 
     private fun saveUser(user: User) {
-        firebaseFirestore.collection(CHILD_USUARIOS).document(user.id).set(user)
+        firebaseFirestore.collection(CHILD_USERS).document(user.id).set(user)
     }
 
     companion object {

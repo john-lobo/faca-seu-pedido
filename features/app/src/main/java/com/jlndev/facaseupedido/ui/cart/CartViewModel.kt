@@ -10,6 +10,7 @@ import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.viewModel.BaseViewModel
 import com.jlndev.productservice.data.repository.CartRepository
 import com.jlndev.productservice.data.repository.OrderHistoryRepository
+import com.jlndev.productservice.data.repository.model.CartTotalQuantity
 import com.jlndev.productservice.data.repository.model.ProductItemModel
 
 class CartViewModel(
@@ -34,6 +35,10 @@ class CartViewModel(
     val createOrderLive : LiveData<ResponseState<Unit>?>
         get() = _createOrderLive
 
+    private val _totalQuantityLive = MutableLiveData<ResponseState<CartTotalQuantity>>()
+    val totalQuantityLive : LiveData<ResponseState<CartTotalQuantity>>
+        get() = _totalQuantityLive
+
     fun getProductsItems() {
         cartRepository.getProductsItems()
             .processSingle(schedulerProvider)
@@ -41,6 +46,7 @@ class CartViewModel(
             .doOnSuccess {
                 _productsItemsLive.value = ResponseState.Loading(false)
                 _productsItemsLive.value = ResponseState.Success(it)
+                updateTotalAfterOperation()
             }
             .doOnError {
                 _productsItemsLive.value = ResponseState.Loading(false)
@@ -55,6 +61,7 @@ class CartViewModel(
             .doOnSuccess {
                 _updateQuantityProductToCartLive.value = ResponseState.Success(it)
                 _updateQuantityProductToCartLive.value = null
+                updateTotalAfterOperation()
             }
             .doOnError {
                 val callback = { updateQuantityProductItem(itemModel) }
@@ -70,6 +77,7 @@ class CartViewModel(
             .doOnSuccess {
                 _deleteProductToCartLive.value = ResponseState.Success(it)
                 _deleteProductToCartLive.value = null
+                updateTotalAfterOperation()
             }
             .doOnError {
                 val callback = { deleteProductItem(itemModel) }
@@ -86,6 +94,7 @@ class CartViewModel(
             .doOnSuccess {
                 _productsItemsLive.value = ResponseState.Loading(false)
                 _productsItemsLive.value = ResponseState.Success(it)
+                updateTotalAfterOperation()
             }
             .doOnError {
                 _productsItemsLive.value = ResponseState.Loading(false)
@@ -99,13 +108,29 @@ class CartViewModel(
             .processCompletable(schedulerProvider)
             .doOnComplete {
                 _createOrderLive.value = ResponseState.Success(Unit)
-                _productsItemsLive.value = ResponseState.Success(listOf())
                 _createOrderLive.value = null
+                deleteAllProductsItems()
+                updateTotalAfterOperation()
             }
             .doOnError {
                 val callback = { insertOrder(productsItems) }
                 _createOrderLive.value = ResponseState.Error(it, callback)
                 _createOrderLive.value = null
+            }
+            .disposedBy(disposables)
+    }
+
+    private fun updateTotalAfterOperation() {
+        cartRepository.updateTotalAfterOperation()
+            .processSingle(schedulerProvider)
+            .doOnSubscribe { _totalQuantityLive.value = ResponseState.Loading(true) }
+            .doOnSuccess {
+                _totalQuantityLive.value = ResponseState.Loading(false)
+                _totalQuantityLive.value = ResponseState.Success(it)
+            }
+            .doOnError {
+                _totalQuantityLive.value = ResponseState.Loading(false)
+                _totalQuantityLive.value = ResponseState.Error(it)
             }
             .disposedBy(disposables)
     }

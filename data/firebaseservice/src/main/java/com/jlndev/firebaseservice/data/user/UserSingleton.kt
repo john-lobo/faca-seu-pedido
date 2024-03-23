@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jlndev.firebaseservice.model.ConfigFirebase.CHILD_USUARIOS
+import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_USERS
 import com.jlndev.firebaseservice.model.LoginError
 import com.jlndev.firebaseservice.model.User
 
@@ -20,7 +20,7 @@ object UserSingleton {
     fun loadUserFromFirebase(fireStore: FirebaseFirestore, auth: FirebaseAuth) {
         auth.uid?.let {
             fireStore
-                .collection(CHILD_USUARIOS)
+                .collection(CHILD_USERS)
                 .document(it)
                 .get()
                 .addOnSuccessListener { document ->

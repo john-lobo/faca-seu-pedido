@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jlndev.firebaseservice.model.ConfigFirebase.CHILD_USUARIOS
+import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_USERS
 import com.jlndev.firebaseservice.model.RegistrationError
 import com.jlndev.firebaseservice.model.User
 import io.reactivex.Completable
@@ -68,7 +68,7 @@ class RegisterUserFirebaseDataSource(
     private fun saveUser(user: User): Completable {
         return Completable.create { emitter ->
             firebaseFirestore
-                .collection(CHILD_USUARIOS)
+                .collection(CHILD_USERS)
                 .document(user.id)
                 .set(user)
                 .addOnSuccessListener {

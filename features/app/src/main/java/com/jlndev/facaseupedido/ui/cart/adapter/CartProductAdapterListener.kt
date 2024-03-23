@@ -6,5 +6,4 @@ import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
 interface CartProductAdapterListener : BaseAdapterListener<ProductItem> {
     fun updateProductToCart(productItem : ProductItem)
     fun deleteProductToCart(productItem : ProductItem)
-    fun totalValueProductToCart(totalValue: Double)
 }

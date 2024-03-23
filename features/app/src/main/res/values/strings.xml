@@ -35,6 +35,7 @@
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="create_order_error">Erro ao realizar pedido</string>
+    <string name="total_error">Erro ao atualizar total</string>
     <string name="create_order">Pedido realizar com sucesso</string>
     <string name="total_items_in_cart">%1$d itens</string>
     <string name="quantity_label">Quantidade: %1$s</string>

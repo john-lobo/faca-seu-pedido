@@ -58,12 +58,6 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
             override fun deleteProductToCart(productItem: ProductItem) {
                 showConfirmDeletionProduct(productItem)
             }
-
-            override fun totalValueProductToCart(totalValue: Double) {
-                val totalItemsInCart = cartProductAdapter.getProductItems().sumOf { it.quantity }
-                binding.confirmOrderView.totalValueView.text = totalValue.toCurrency()
-                binding.confirmOrderView.quantityValueView.text = totalItemsInCart.toString()
-            }
         })
 
         with(binding) {
@@ -159,6 +153,26 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                         }
                         is ResponseState.Error -> {
                             requireView().showSnackbar(getString(R.string.create_order_error)) {
+                                it.action?.invoke()
+                            }
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+
+            totalQuantityLive.observe(viewLifecycleOwner) {
+                it?.let {
+                    when(it) {
+                        is ResponseState.Success -> {
+                            val total = it.data
+                            binding.confirmOrderView.totalValueView.text = total.totalPrice.toCurrency()
+                            binding.confirmOrderView.quantityValueView.text = total.totalQuantity.toString()
+                        }
+                        is ResponseState.Error -> {
+                            binding.confirmOrderView.root.gone()
+                            requireView().showSnackbar(getString(R.string.total_error)) {
                                 it.action?.invoke()
                             }
                         }
