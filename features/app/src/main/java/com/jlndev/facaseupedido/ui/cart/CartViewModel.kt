@@ -10,7 +10,7 @@ import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.viewModel.BaseViewModel
 import com.jlndev.productservice.data.repository.CartRepository
 import com.jlndev.productservice.data.repository.OrderHistoryRepository
-import com.jlndev.productservice.data.repository.model.CartTotalQuantity
+import com.jlndev.productservice.data.remote.model.CartTotalQuantity
 import com.jlndev.productservice.data.repository.model.ProductItemModel
 
 class CartViewModel(

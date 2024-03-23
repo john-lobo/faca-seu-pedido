@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 class UserOrderHistory (
     val id: String = "",
     val order: String = "",
-    val quantityItems: Int = 0,
-    val totalValue: Double = 0.0
+    val totalQuantity: Int = 0,
+    val totalPrice: Double = 0.0
 )

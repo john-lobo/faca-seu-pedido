@@ -1,8 +1,7 @@
 package com.jlndev.productservice.data.repository
 
-import com.jlndev.productservice.data.repository.model.CartTotalQuantity
+import com.jlndev.productservice.data.remote.model.CartTotalQuantity
 import com.jlndev.productservice.data.repository.model.ProductItemModel
-import io.reactivex.Completable
 import io.reactivex.Single
 
 interface CartRepository {

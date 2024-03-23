@@ -38,8 +38,8 @@ class OrderHistoryRemoteRepositoryImpl(
                         val orderHistoryItem = OrderHistoryItemModel(
                             orderHistory.id,
                             orderItems,
-                            orderHistory.quantityItems,
-                            orderHistory.totalValue
+                            orderHistory.totalQuantity,
+                            orderHistory.totalPrice
                         )
                         orders.add(orderHistoryItem)
                     }

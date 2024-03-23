@@ -1,4 +1,4 @@
-package com.jlndev.productservice.data.repository.model
+package com.jlndev.productservice.data.remote.model
 
 data class CartTotalQuantity(
     var totalQuantity: Long = 1,

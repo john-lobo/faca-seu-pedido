@@ -9,7 +9,7 @@ import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_TOTAL
 import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_USERS
 import com.jlndev.baseservice.firebase.ConfigFirebase.COLLECTION_CART
 import com.jlndev.baseservice.firebase.ConfigFirebase.COLLECTION_TOTAL
-import com.jlndev.productservice.data.repository.model.CartTotalQuantity
+import com.jlndev.productservice.data.remote.model.CartTotalQuantity
 import com.jlndev.productservice.data.repository.model.ProductItemModel
 import io.reactivex.Single
 
@@ -71,31 +71,42 @@ class CartRemoteRepository(
     }
 
     override fun deleteAllProductsItems(): Single<List<ProductItemModel>> {
-        val cartCollection =
-            getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
+        val cartCollection = getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
+        val totalCollection = getUserTotalCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
 
         return Single.create { emitter ->
-            cartCollection.get()
-                .addOnSuccessListener { result ->
-                    val deleteTasks = mutableListOf<Task<Void>>()
-                    for (document in result) {
-                        val deleteTask = document.reference.delete()
-                        deleteTasks.add(deleteTask)
-                    }
+            val deleteTasks = mutableListOf<Task<Void>>()
 
-                    Tasks.whenAll(deleteTasks)
-                        .addOnSuccessListener {
-                            emitter.onSuccess(listOf())
+            fun addDeleteTasks(collection: CollectionReference) {
+                collection.get()
+                    .addOnSuccessListener { result ->
+                        for (document in result) {
+                            val deleteTask = document.reference.delete()
+                            deleteTasks.add(deleteTask)
                         }
-                        .addOnFailureListener { exception ->
-                            emitter.onError(exception)
-                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        emitter.onError(exception)
+                    }
+            }
+
+            // Adiciona as tarefas de exclusão dos documentos do carrinho
+            addDeleteTasks(cartCollection)
+
+            // Adiciona as tarefas de exclusão dos documentos da coleção total
+            addDeleteTasks(totalCollection)
+
+            // Executa todas as tarefas de exclusão e emite o sucesso ou erro
+            Tasks.whenAll(deleteTasks)
+                .addOnSuccessListener {
+                    emitter.onSuccess(listOf())
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
                 }
         }
     }
+
 
     override fun getProductItem(productItemModel: ProductItemModel): Single<ProductItemModel> {
         val cartCollection =
@@ -160,6 +171,18 @@ class CartRemoteRepository(
                 .collection(CHILD_USERS)
                 .document(userId)
                 .collection(COLLECTION_CART)
+        } else {
+            null
+        }
+    }
+
+    private fun getUserTotalCollectionRef(): CollectionReference? {
+        val userId = auth.currentUser?.uid
+        return if (userId != null) {
+            firestore
+                .collection(CHILD_USERS)
+                .document(userId)
+                .collection(COLLECTION_TOTAL)
         } else {
             null
         }

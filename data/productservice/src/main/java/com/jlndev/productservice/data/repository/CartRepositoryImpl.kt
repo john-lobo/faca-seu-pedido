@@ -2,7 +2,7 @@ package com.jlndev.productservice.data.repository
 
 import androidx.room.EmptyResultSetException
 import com.jlndev.productservice.data.db.dao.CartDao
-import com.jlndev.productservice.data.repository.model.CartTotalQuantity
+import com.jlndev.productservice.data.remote.model.CartTotalQuantity
 import com.jlndev.productservice.data.repository.model.ProductItemModel
 import io.reactivex.Single
 
