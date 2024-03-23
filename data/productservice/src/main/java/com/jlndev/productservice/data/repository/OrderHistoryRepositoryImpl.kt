@@ -22,7 +22,7 @@ class OrderHistoryRepositoryImpl(
                             Gson().fromJson(orderHistory.order, Array<ProductItemModel>::class.java)
                                 .asList()
                         OrderHistoryItemModel(
-                            orderHistory.id,
+                            orderHistory.id.toString(),
                             order,
                             orderHistory.quantityItems,
                             orderHistory.totalValue

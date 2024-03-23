@@ -5,7 +5,6 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jlndev.baseservice.firebase.ConfigFirebase
 import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_TOTAL
 import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_USERS
 import com.jlndev.baseservice.firebase.ConfigFirebase.COLLECTION_CART
