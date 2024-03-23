@@ -7,6 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.gone
@@ -28,11 +29,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     private val firebaseAuth: FirebaseAuth by inject()
+    private val fireStore: FirebaseFirestore by inject()
 
     override val viewModel: HomeViewModel by viewModel()
     private lateinit var productAdapter: ProductAdapter
 
     override fun onInitData() {
+        UserSingleton.loadUserFromFirebase(fireStore, firebaseAuth)
         viewModel.getProductsItems()
     }
 

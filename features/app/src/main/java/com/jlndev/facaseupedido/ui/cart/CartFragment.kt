@@ -14,7 +14,7 @@ import com.jlndev.coreandroid.ext.gone
 import com.jlndev.coreandroid.ext.showSnackbar
 import com.jlndev.coreandroid.ext.toCurrency
 import com.jlndev.coreandroid.ext.visible
-import com.jlndev.facaseupedido.MainActivity
+import com.jlndev.facaseupedido.OldMainActivity
 import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentCartBinding
 import com.jlndev.facaseupedido.ui.cart.adapter.CartProductAdapter
@@ -300,7 +300,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
     }
 
     private fun showClearList(show: Boolean) {
-        (requireActivity() as MainActivity).findViewById<ImageView>(R.id.clearCartView).apply {
+        (requireActivity() as OldMainActivity).findViewById<ImageView>(R.id.clearCartView).apply {
             setOnClickListener {
                 showConfirmClearCart()
             }

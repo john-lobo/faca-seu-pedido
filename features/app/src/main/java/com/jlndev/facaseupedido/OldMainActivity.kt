@@ -1,11 +1,8 @@
 package com.jlndev.facaseupedido
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -18,11 +15,10 @@ import com.jlndev.facaseupedido.databinding.ActivityMainBinding
 import com.jlndev.firebaseservice.data.user.UserSingleton
 import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity() {
+class OldMainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-
 
     private val firebaseAuth: FirebaseAuth by inject()
     private val fireStore: FirebaseFirestore by inject()
