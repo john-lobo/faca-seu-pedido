@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "154486649264",
+    "project_id": "faca-seu-pedido-3acba",
+    "storage_bucket": "faca-seu-pedido-3acba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154486649264:android:b6d687fb123be93e976675",
+        "android_client_info": {
+          "package_name": "com.jlndev.facaseupedido"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm1_I231ArpsyJFSjN85hiGLleeY9HOM0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
