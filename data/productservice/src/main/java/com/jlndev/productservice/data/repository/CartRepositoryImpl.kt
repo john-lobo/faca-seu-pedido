@@ -5,6 +5,7 @@ import com.jlndev.productservice.data.db.dao.CartDao
 import com.jlndev.productservice.data.remote.model.CartTotalQuantity
 import com.jlndev.productservice.data.repository.model.ProductItemModel
 import io.reactivex.Single
+import io.reactivex.internal.operators.single.SingleJust
 
 class CartRepositoryImpl(
     private val cartDao: CartDao
@@ -52,6 +53,6 @@ class CartRepositoryImpl(
     }
 
     override fun updateTotalAfterOperation(): Single<CartTotalQuantity> {
-        TODO("Not yet implemented")
+        return Single.just(CartTotalQuantity())
     }
 }
