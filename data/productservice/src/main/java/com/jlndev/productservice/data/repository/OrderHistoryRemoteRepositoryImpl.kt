@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_USERS
 import com.jlndev.baseservice.firebase.ConfigFirebase.COLLECTION_ORDERS
+import com.jlndev.productservice.data.remote.model.Cart
 import com.jlndev.productservice.data.remote.model.UserOrderHistory
 import com.jlndev.productservice.data.repository.model.OrderHistoryItemModel
 import com.jlndev.productservice.data.repository.model.ProductItemModel
@@ -30,15 +31,8 @@ class OrderHistoryRemoteRepositoryImpl(
                 .addOnSuccessListener { result ->
                     val orders = mutableListOf<OrderHistoryItemModel>()
                     for (document in result) {
-                        val orderHistory = document.toObject(UserOrderHistory::class.java)
-                        val orderItems = Gson().fromJson(orderHistory.order, Array<ProductItemModel>::class.java).asList()
-                        val orderHistoryItem = OrderHistoryItemModel(
-                            orderHistory.id,
-                            orderItems,
-                            orderHistory.totalQuantity,
-                            orderHistory.totalPrice
-                        )
-                        orders.add(orderHistoryItem)
+                        val orderHistory = document.toObject(OrderHistoryItemModel::class.java)
+                        orders.add(orderHistory)
                     }
                     emitter.onSuccess(orders)
                 }
@@ -55,15 +49,13 @@ class OrderHistoryRemoteRepositoryImpl(
         }
 
         val orderCollectionRef = firestore.collection(CHILD_USERS).document(userId).collection(COLLECTION_ORDERS)
-
-        val orderItem = Gson().toJson(productsItems)
         val totalValue = productsItems.sumOf { it.price * it.quantity }
         val quantityItems = productsItems.size
         val randomKey = UUID.randomUUID().toString()
 
-        val orderData = UserOrderHistory(
+        val orderData = OrderHistoryItemModel(
             randomKey,
-            orderItem,
+            productsItems,
             quantityItems,
             totalValue
         )

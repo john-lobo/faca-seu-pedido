@@ -41,16 +41,4 @@ class CartProductAdapter(
     fun getProductItems(): List<ProductItem> {
         return items
     }
-
-    fun submitListProductItems(productItems :List<ProductItem>) {
-        submitList(productItems)
-    }
-
-    fun removeProductItem(productItem: ProductItem){
-        removeItem(productItem)
-    }
-
-    fun updateProductItem(productItem: ProductItem){
-        updateItem(productItem)
-    }
 }

@@ -67,10 +67,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         binding.recyclerProductItemsView.adapter = productAdapter
 
         UserSingleton.getUser().observe(viewLifecycleOwner) {
-            it?.let {
-                binding.nomeLoginView.text = getString(R.string.welcome_user, it.name.split(" ")[0])
-            } ?: run {
-                binding.nomeLoginView.gone()
+            with(binding.nomeLoginView) {
+                it?.let {
+                    text = getString(R.string.welcome_user, it.name.split(" ")[0])
+                } ?: run {
+                    text = getString(R.string.login_or_register)
+                    setOnClickListener {
+                        findNavController().navigate(R.id.action_home_to_login)
+                    }
+                }
             }
         }
     }

@@ -8,6 +8,7 @@ import io.reactivex.Single
 interface CartRepository {
     fun getProductsItems  (): Single<Cart>
     fun insertProductItem  (product: ProductItemModel): Single<Cart>
+    fun updateQuantityProductItem  (product: ProductItemModel): Single<Cart>
     fun deleteProductItem  (product: ProductItemModel): Single<Cart>
     fun deleteAllProductsItems() :Single<Cart>
 }

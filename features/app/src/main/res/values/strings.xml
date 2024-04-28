@@ -52,4 +52,5 @@
     <string name="inform_quantity">Informar quantidade</string>
     <string name="confirm">Confirmar</string>
     <string name="welcome_user">Oi, %1$s ;)</string>
+    <string name="login_or_register"><u>Faça login ou cadastre-se</u></string>
 </resources>

@@ -26,12 +26,17 @@ object UserSingleton {
                 .addOnSuccessListener { document ->
                     if (document.exists()) {
                         user.value = document.toObject(User::class.java)
+                    } else {
+                        user.value = null
                     }
                 }
                 .addOnFailureListener { exception ->
                     Log.e("LOAD_USER", "loadUserFromFirebase: ${exception.message}", exception)
                     LoginError.UserNotFound.message
+                    user.value = null
                 }
+        } ?: run {
+            user.value = null
         }
     }
 }

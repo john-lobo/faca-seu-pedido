@@ -7,4 +7,3 @@ data class Cart(
     val totalQuantity: Long = 0,
     val totalPrice: Double = 0.0
 )
-

@@ -66,6 +66,40 @@ class CartRemoteRepository(
         }
     }
 
+    override fun updateQuantityProductItem(product: ProductItemModel): Single<Cart> {
+        val cartDocument = getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
+
+        return Single.create { emitter ->
+            cartDocument.get()
+                .addOnSuccessListener { result ->
+                    val cart = result.toObject(Cart::class.java) ?: Cart()
+                    val updatedProducts = cart.productItems.toMutableList()
+                    val existingProductIndex = updatedProducts.indexOfFirst { it.id == product.id }
+
+                    if (existingProductIndex != -1) {
+                        updatedProducts[existingProductIndex] =
+                            product.copy(quantity = product.quantity)
+                    }
+
+                    val totalQuantity = updatedProducts.sumOf { it.quantity }
+                    val totalPrice = updatedProducts.sumOf { it.price * it.quantity }
+                    val updatedCart = Cart(updatedProducts, totalQuantity, totalPrice)
+
+                    cartDocument.set(updatedCart)
+                        .addOnSuccessListener {
+                            emitter.onSuccess(updatedCart)
+                        }
+                        .addOnFailureListener { exception ->
+                            emitter.onError(exception)
+                        }
+                }
+                .addOnFailureListener { exception ->
+                    emitter.onError(exception)
+                }
+        }
+    }
+
+
     override fun deleteProductItem(product: ProductItemModel): Single<Cart> {
         val cartCollection = getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
 
@@ -129,18 +163,6 @@ class CartRemoteRepository(
                 .document(userId)
                 .collection(COLLECTION_CART)
                 .document(COLLECTION_CART)
-        } else {
-            null
-        }
-    }
-
-    private fun getUserTotalCollectionRef(): CollectionReference? {
-        val userId = auth.currentUser?.uid
-        return if (userId != null) {
-            firestore
-                .collection(CHILD_USERS)
-                .document(userId)
-                .collection(COLLECTION_TOTAL)
         } else {
             null
         }

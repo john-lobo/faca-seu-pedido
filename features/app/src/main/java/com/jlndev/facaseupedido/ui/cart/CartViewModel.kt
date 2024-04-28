@@ -8,6 +8,7 @@ import com.jlndev.baseservice.ext.processCompletable
 import com.jlndev.baseservice.ext.processSingle
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.viewModel.BaseViewModel
+import com.jlndev.coreandroid.ext.toCurrency
 import com.jlndev.productservice.data.remote.model.Cart
 import com.jlndev.productservice.data.repository.CartRepository
 import com.jlndev.productservice.data.repository.OrderHistoryRepository
@@ -23,17 +24,21 @@ class CartViewModel(
     val productsItemsLive : LiveData<ResponseState<Cart>>
         get() = _productsItemsLive
 
-    private val _updateQuantityProductToCartLive = MutableLiveData<ResponseState<Cart>?>()
-    val updateQuantityProductToCartLive : LiveData<ResponseState<Cart>?>
+    private val _updateQuantityProductToCartLive = MutableLiveData<ResponseState<ProductItemModel>?>()
+    val updateQuantityProductToCartLive : LiveData<ResponseState<ProductItemModel>?>
         get() = _updateQuantityProductToCartLive
 
-    private val _deleteProductToCartLive = MutableLiveData<ResponseState<Cart>?>()
-    val deleteProductToCartLive : LiveData<ResponseState<Cart>?>
+    private val _deleteProductToCartLive = MutableLiveData<ResponseState<ProductItemModel>?>()
+    val deleteProductToCartLive : LiveData<ResponseState<ProductItemModel>?>
         get() = _deleteProductToCartLive
 
     private val _createOrderLive = MutableLiveData<ResponseState<Unit>?>()
     val createOrderLive : LiveData<ResponseState<Unit>?>
         get() = _createOrderLive
+
+    var totalPrice = MutableLiveData<Double>()
+    var totalQuantity = MutableLiveData<Long>()
+
     fun getProductsItems() {
         cartRepository.getProductsItems()
             .processSingle(schedulerProvider)
@@ -41,6 +46,7 @@ class CartViewModel(
             .doOnSuccess {
                 _productsItemsLive.value = ResponseState.Loading(false)
                 _productsItemsLive.value = ResponseState.Success(it)
+                updateCartValue(it.totalPrice, it.totalQuantity)
             }
             .doOnError {
                 _productsItemsLive.value = ResponseState.Loading(false)
@@ -50,11 +56,13 @@ class CartViewModel(
     }
 
     fun updateQuantityProductItem(itemModel: ProductItemModel) {
-        cartRepository.insertProductItem(itemModel)
+        cartRepository.updateQuantityProductItem(itemModel)
             .processSingle(schedulerProvider)
             .doOnSuccess {
-                _updateQuantityProductToCartLive.value = ResponseState.Success(it)
+                val updatedItem = it.productItems.find { it.id == itemModel.id }!!
+                _updateQuantityProductToCartLive.value = ResponseState.Success(updatedItem)
                 _updateQuantityProductToCartLive.value = null
+                updateCartValue(it.totalPrice, it.totalQuantity)
             }
             .doOnError {
                 val callback = { updateQuantityProductItem(itemModel) }
@@ -68,8 +76,10 @@ class CartViewModel(
         cartRepository.deleteProductItem(itemModel)
             .processSingle(schedulerProvider)
             .doOnSuccess {
-                _deleteProductToCartLive.value = ResponseState.Success(it)
+                val deleteItem = it.productItems.find { it.id == itemModel.id }!!
+                _deleteProductToCartLive.value = ResponseState.Success(deleteItem)
                 _deleteProductToCartLive.value = null
+                updateCartValue(it.totalPrice, it.totalQuantity)
             }
             .doOnError {
                 val callback = { deleteProductItem(itemModel) }
@@ -86,6 +96,7 @@ class CartViewModel(
             .doOnSuccess {
                 _productsItemsLive.value = ResponseState.Loading(false)
                 _productsItemsLive.value = ResponseState.Success(it)
+                updateCartValue(it.totalPrice, it.totalQuantity)
             }
             .doOnError {
                 _productsItemsLive.value = ResponseState.Loading(false)
@@ -108,5 +119,10 @@ class CartViewModel(
                 _createOrderLive.value = null
             }
             .disposedBy(disposables)
+    }
+
+     private fun updateCartValue(totalPrice: Double, totalQuantity: Long) {
+        this.totalPrice.value = totalPrice
+        this.totalQuantity.value = totalQuantity
     }
 }
