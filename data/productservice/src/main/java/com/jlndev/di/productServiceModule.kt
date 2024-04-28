@@ -6,7 +6,6 @@ import com.jlndev.productservice.data.api.ProductService
 import com.jlndev.productservice.data.db.database.ProductDataBase
 import com.jlndev.productservice.data.repository.CartRemoteRepository
 import com.jlndev.productservice.data.repository.CartRepository
-import com.jlndev.productservice.data.repository.CartRepositoryImpl
 import com.jlndev.productservice.data.repository.OrderHistoryRemoteRepositoryImpl
 import com.jlndev.productservice.data.repository.OrderHistoryRepository
 import com.jlndev.productservice.data.repository.OrderHistoryRepositoryImpl
@@ -26,10 +25,10 @@ val productServiceModule = module {
     single<ProductRepository> { ProductRepositoryImpl(get(),get()) }
 
     //Remote
-//    single<CartRepository> { CartRemoteRepository(get(), get()) }
-//    single<OrderHistoryRepository> { OrderHistoryRemoteRepositoryImpl(get(), get()) }
+    single<CartRepository> { CartRemoteRepository(get(), get()) }
+    single<OrderHistoryRepository> { OrderHistoryRemoteRepositoryImpl(get(), get()) }
 
     //Local
-    single<CartRepository> { CartRepositoryImpl(get()) }
-    single<OrderHistoryRepository> { OrderHistoryRepositoryImpl(get()) }
+//    single<CartRepository> { CartRepositoryImpl(get()) }
+//    single<OrderHistoryRepository> { OrderHistoryRepositoryImpl(get()) }
 }

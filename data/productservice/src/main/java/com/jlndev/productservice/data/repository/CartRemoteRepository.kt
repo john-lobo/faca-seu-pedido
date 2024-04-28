@@ -1,15 +1,13 @@
 package com.jlndev.productservice.data.repository
 
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_TOTAL
 import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_USERS
 import com.jlndev.baseservice.firebase.ConfigFirebase.COLLECTION_CART
 import com.jlndev.baseservice.firebase.ConfigFirebase.COLLECTION_TOTAL
-import com.jlndev.productservice.data.remote.model.CartTotalQuantity
+import com.jlndev.productservice.data.remote.model.Cart
 import com.jlndev.productservice.data.repository.model.ProductItemModel
 import io.reactivex.Single
 
@@ -18,88 +16,49 @@ class CartRemoteRepository(
     private val auth: FirebaseAuth
 ) : CartRepository {
 
-    override fun getProductsItems(): Single<List<ProductItemModel>> {
+    override fun getProductsItems(): Single<Cart> {
         val cartCollection =
             getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
 
         return Single.create { emitter ->
             cartCollection.get()
                 .addOnSuccessListener { result ->
-                    val products = mutableListOf<ProductItemModel>()
-                    result.forEach { document ->
-                        val productItemModel = document.toObject(ProductItemModel::class.java)
-                        products.add(productItemModel)
+                    val cart = result.toObject(Cart::class.java)
+                    emitter.onSuccess(cart ?: Cart())
+                }
+                .addOnFailureListener { exception ->
+                    emitter.onError(exception)
+                }
+        }
+    }
+
+    override fun insertProductItem(product: ProductItemModel): Single<Cart> {
+        val cartDocument = getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
+
+        return Single.create { emitter ->
+            cartDocument.get()
+                .addOnSuccessListener { result ->
+                    val cart = result.toObject(Cart::class.java) ?: Cart()
+                    val updatedProducts = cart.productItems.toMutableList()
+                    val existingProductIndex = updatedProducts.indexOfFirst { it.id == product.id }
+
+                    if (existingProductIndex != -1) {
+                        updatedProducts[existingProductIndex] = product.copy(quantity = updatedProducts[existingProductIndex].quantity + product.quantity)
+                    } else {
+                        updatedProducts.add(product)
                     }
-                    emitter.onSuccess(products)
-                }
-                .addOnFailureListener { exception ->
-                    emitter.onError(exception)
-                }
-        }
-    }
 
-    override fun insertProductItem(productItemModel: ProductItemModel): Single<ProductItemModel> {
-        val cartCollection =
-            getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
-        val cartItemDocument = cartCollection.document(productItemModel.id.toString())
+                    val totalQuantity = updatedProducts.sumOf { it.quantity }
+                    val totalPrice = updatedProducts.sumOf { it.price * it.quantity }
+                    val updatedCart = Cart(updatedProducts, totalQuantity, totalPrice)
 
-        return Single.create { emitter ->
-            cartItemDocument.set(productItemModel)
-                .addOnSuccessListener {
-                    emitter.onSuccess(productItemModel)
-                }
-                .addOnFailureListener { exception ->
-                    emitter.onError(exception)
-                }
-        }
-    }
-
-    override fun deleteProductItem(productItemModel: ProductItemModel): Single<ProductItemModel> {
-        val cartCollection =
-            getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
-        val cartItemDocument = cartCollection.document(productItemModel.id.toString())
-
-        return Single.create { emitter ->
-            cartItemDocument.delete()
-                .addOnSuccessListener {
-                    emitter.onSuccess(productItemModel)
-                }
-                .addOnFailureListener { exception ->
-                    emitter.onError(exception)
-                }
-        }
-    }
-
-    override fun deleteAllProductsItems(): Single<List<ProductItemModel>> {
-        val cartCollection = getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
-        val totalCollection = getUserTotalCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
-
-        return Single.create { emitter ->
-            val deleteTasks = mutableListOf<Task<Void>>()
-
-            fun addDeleteTasks(collection: CollectionReference) {
-                collection.get()
-                    .addOnSuccessListener { result ->
-                        for (document in result) {
-                            val deleteTask = document.reference.delete()
-                            deleteTasks.add(deleteTask)
+                    cartDocument.set(updatedCart)
+                        .addOnSuccessListener {
+                            emitter.onSuccess(updatedCart)
                         }
-                    }
-                    .addOnFailureListener { exception ->
-                        emitter.onError(exception)
-                    }
-            }
-
-            // Adiciona as tarefas de exclusão dos documentos do carrinho
-            addDeleteTasks(cartCollection)
-
-            // Adiciona as tarefas de exclusão dos documentos da coleção total
-            addDeleteTasks(totalCollection)
-
-            // Executa todas as tarefas de exclusão e emite o sucesso ou erro
-            Tasks.whenAll(deleteTasks)
-                .addOnSuccessListener {
-                    emitter.onSuccess(listOf())
+                        .addOnFailureListener { exception ->
+                            emitter.onError(exception)
+                        }
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
@@ -107,16 +66,32 @@ class CartRemoteRepository(
         }
     }
 
-
-    override fun getProductItem(productItemModel: ProductItemModel): Single<ProductItemModel> {
-        val cartCollection =
-            getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
-        val cartItemDocument = cartCollection.document(productItemModel.id.toString())
+    override fun deleteProductItem(product: ProductItemModel): Single<Cart> {
+        val cartCollection = getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
 
         return Single.create { emitter ->
-            cartItemDocument.set(productItemModel)
-                .addOnSuccessListener {
-                    emitter.onSuccess(productItemModel)
+            cartCollection.get()
+                .addOnSuccessListener { result ->
+                    val cart = result.toObject(Cart::class.java) ?: Cart()
+
+                    val updatedProducts = cart.productItems.toMutableList()
+                    val removed = updatedProducts.remove(product)
+
+                    if (removed) {
+                        val totalQuantity = cart.totalQuantity - product.quantity
+                        val totalPrice = cart.totalPrice - (product.price * product.quantity)
+                        val updatedCart = Cart(updatedProducts, totalQuantity, totalPrice)
+
+                        cartCollection.set(updatedCart)
+                            .addOnSuccessListener {
+                                emitter.onSuccess(updatedCart)
+                            }
+                            .addOnFailureListener { exception ->
+                                emitter.onError(exception)
+                            }
+                    } else {
+                        emitter.onSuccess(cart)
+                    }
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
@@ -124,39 +99,21 @@ class CartRemoteRepository(
         }
     }
 
-    override fun updateTotalAfterOperation(): Single<CartTotalQuantity> {
-        return getProductsItems()
-            .flatMap { cartItems ->
-                updateTotalCollection(cartItems)
-            }
-            .onErrorResumeNext {
-                Single.error(it)
-            }
-    }
 
-    private fun updateTotalCollection(cartItems: List<ProductItemModel>): Single<CartTotalQuantity> {
-        val userId = auth.currentUser?.uid
-        if (userId.isNullOrEmpty()) {
-            return Single.error(Throwable("User not authenticated"))
-        }
-
-        val totalPrice = cartItems.sumOf { it.price * it.quantity }
-        val totalQuantity = cartItems.sumOf { it.quantity }
-
-        val totalData = CartTotalQuantity(
-            totalQuantity,
-            totalPrice
-        )
+    override fun deleteAllProductsItems(): Single<Cart> {
+        val cartDocument = getUserCartCollectionRef() ?: return Single.error(Throwable("User not authenticated"))
 
         return Single.create { emitter ->
-            firestore
-                .collection(CHILD_USERS)
-                .document(userId)
-                .collection(COLLECTION_TOTAL)
-                .document(CHILD_TOTAL)
-                .set(totalData)
+            cartDocument.get()
                 .addOnSuccessListener {
-                    emitter.onSuccess(totalData)
+                    val updatedCart = Cart()
+                    cartDocument.set(updatedCart)
+                        .addOnSuccessListener {
+                            emitter.onSuccess(updatedCart)
+                        }
+                        .addOnFailureListener { exception ->
+                            emitter.onError(exception)
+                        }
                 }
                 .addOnFailureListener { exception ->
                     emitter.onError(exception)
@@ -164,13 +121,14 @@ class CartRemoteRepository(
         }
     }
 
-    private fun getUserCartCollectionRef(): CollectionReference? {
+    private fun getUserCartCollectionRef(): DocumentReference? {
         val userId = auth.currentUser?.uid
         return if (userId != null) {
             firestore
                 .collection(CHILD_USERS)
                 .document(userId)
                 .collection(COLLECTION_CART)
+                .document(COLLECTION_CART)
         } else {
             null
         }

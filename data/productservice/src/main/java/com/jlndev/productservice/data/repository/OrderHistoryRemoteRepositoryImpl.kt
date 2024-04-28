@@ -5,9 +5,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.jlndev.baseservice.firebase.ConfigFirebase.CHILD_USERS
 import com.jlndev.baseservice.firebase.ConfigFirebase.COLLECTION_ORDERS
-import com.jlndev.productservice.data.db.dao.CartDao
-import com.jlndev.productservice.data.db.dao.OrderHistoryDao
-import com.jlndev.productservice.data.db.model.OrderHistoryEntity
 import com.jlndev.productservice.data.remote.model.UserOrderHistory
 import com.jlndev.productservice.data.repository.model.OrderHistoryItemModel
 import com.jlndev.productservice.data.repository.model.ProductItemModel

@@ -7,6 +7,7 @@ import com.jlndev.baseservice.ext.disposedBy
 import com.jlndev.baseservice.ext.processSingle
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.viewModel.BaseViewModel
+import com.jlndev.productservice.data.remote.model.Cart
 import com.jlndev.productservice.data.repository.CartRepository
 import com.jlndev.productservice.data.repository.ProductRepository
 import com.jlndev.productservice.data.repository.model.ProductItemModel
@@ -21,8 +22,8 @@ class HomeViewModel(
     val productsItemsLive : LiveData<ResponseState<List<ProductItemModel>>>
         get() = _productsItemsLive
 
-    private val _addProductToCartLive = MutableLiveData<ResponseState<ProductItemModel>?>()
-    val addProductToCartLive : LiveData<ResponseState<ProductItemModel>?>
+    private val _addProductToCartLive = MutableLiveData<ResponseState<Cart>?>()
+    val addProductToCartLive : LiveData<ResponseState<Cart>?>
         get() = _addProductToCartLive
 
     fun getProductsItems () {
@@ -41,24 +42,17 @@ class HomeViewModel(
     }
 
     fun addProductToCart(itemModel: ProductItemModel) {
-        cartRepository.getProductItem(itemModel)
+        cartRepository.insertProductItem(itemModel)
             .processSingle(schedulerProvider)
             .doOnSuccess {
                 _addProductToCartLive.value = ResponseState.Success(it)
                 _addProductToCartLive.value = null
-                updateTotalAfterOperation()
             }
             .doOnError {
                 val callback = { addProductToCart(itemModel) }
                 _addProductToCartLive.value = ResponseState.Error(it, callback)
                 _addProductToCartLive.value = null
             }
-            .disposedBy(disposables)
-    }
-
-    private fun updateTotalAfterOperation() {
-        cartRepository.updateTotalAfterOperation()
-            .processSingle(schedulerProvider)
             .disposedBy(disposables)
     }
 }

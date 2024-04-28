@@ -91,8 +91,9 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                         }
                     }
                     is ResponseState.Success -> {
-                        val items = it.data.map { it.toProductItem() }
+                        val items = it.data.productItems.map { it.toProductItem() }
                         cartProductAdapter.submitListProductItems(items)
+                        updateCartValue(it.data.totalPrice, it.data.totalQuantity)
                         if(items.isNotEmpty()) {
                             showView()
                         } else {
@@ -109,7 +110,9 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                 it?.let {
                     when(it) {
                         is ResponseState.Success -> {
-                            cartProductAdapter.updateProductItem(it.data.toProductItem())
+                            val items = it.data.productItems.map { it.toProductItem() }
+                            cartProductAdapter.submitListProductItems(items)
+                            updateCartValue(it.data.totalPrice, it.data.totalQuantity)
                             requireView().showSnackbar(getString(R.string.updated_quantity_product))
                         }
                         is ResponseState.Error -> {
@@ -127,7 +130,9 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                 it?.let {
                     when(it) {
                         is ResponseState.Success -> {
-                            cartProductAdapter.removeProductItem(it.data.toProductItem())
+                            val items = it.data.productItems.map { it.toProductItem() }
+                            cartProductAdapter.submitListProductItems(items)
+                            updateCartValue(it.data.totalPrice, it.data.totalQuantity)
                             requireView().showSnackbar(getString(R.string.deleted_product))
                             if(cartProductAdapter.getProductItems().isEmpty()) {
                                 showViewProductNotFound()
@@ -161,27 +166,12 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                     }
                 }
             }
-
-            totalQuantityLive.observe(viewLifecycleOwner) {
-                it?.let {
-                    when(it) {
-                        is ResponseState.Success -> {
-                            val total = it.data
-                            binding.confirmOrderView.totalValueView.text = total.totalPrice.toCurrency()
-                            binding.confirmOrderView.quantityValueView.text = total.totalQuantity.toString()
-                        }
-                        is ResponseState.Error -> {
-                            binding.confirmOrderView.root.gone()
-                            requireView().showSnackbar(getString(R.string.total_error)) {
-                                it.action?.invoke()
-                            }
-                        }
-
-                        else -> {}
-                    }
-                }
-            }
         }
+    }
+
+    private fun updateCartValue(totalPrice: Double, totalQuantity: Long) {
+        binding.confirmOrderView.totalValueView.text = totalPrice.toCurrency()
+        binding.confirmOrderView.quantityValueView.text = totalQuantity.toString()
     }
 
     override fun showLoading() {
@@ -300,7 +290,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
     }
 
     private fun showClearList(show: Boolean) {
-        (requireActivity() as OldMainActivity).findViewById<ImageView>(R.id.clearCartView).apply {
+        requireActivity().findViewById<ImageView>(R.id.clearCartView).apply {
             setOnClickListener {
                 showConfirmClearCart()
             }

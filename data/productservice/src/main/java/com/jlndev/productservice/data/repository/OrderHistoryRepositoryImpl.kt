@@ -1,7 +1,6 @@
 package com.jlndev.productservice.data.repository
 
 import com.google.gson.Gson
-import com.jlndev.productservice.data.db.dao.CartDao
 import com.jlndev.productservice.data.db.dao.OrderHistoryDao
 import com.jlndev.productservice.data.db.model.OrderHistoryEntity
 import com.jlndev.productservice.data.repository.model.OrderHistoryItemModel

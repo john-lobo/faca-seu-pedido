@@ -1,6 +1,5 @@
 package com.jlndev.productservice.data.remote.model
 
-import androidx.room.PrimaryKey
 import com.jlndev.productservice.data.repository.model.ProductItemModel
 
 data class UserCartProductItem (
