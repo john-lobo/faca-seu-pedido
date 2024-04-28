@@ -51,16 +51,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             }
 
             override fun addProductToCart(productItem: ProductItem) {
-                firebaseAuth.currentUser?.let {
+//                firebaseAuth.currentUser?.let {
                     QuantityInputDialog(requireContext()).show { quantity ->
                         if(quantity > 0) {
                             productItem.quantity = quantity
                             viewModel.addProductToCart(productItem.toProductItemModel())
                         }
                     }
-                } ?: run {
-                    findNavController().navigate(R.id.action_home_to_login)
-                }
+//                } ?: run {
+//                    findNavController().navigate(R.id.action_home_to_login)
+//                }
             }
         })
 

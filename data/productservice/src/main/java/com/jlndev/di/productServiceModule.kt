@@ -24,6 +24,12 @@ val productServiceModule = module {
     single { ProductDataBase.getInstance(androidContext()).orderHistoryDao }
     single { ProductDataBase.getInstance(androidContext()).productShowcaseDao }
     single<ProductRepository> { ProductRepositoryImpl(get(),get()) }
-    single<CartRepository> { CartRemoteRepository(get(), get()) }
-    single<OrderHistoryRepository> { OrderHistoryRemoteRepositoryImpl(get(), get()) }
+
+    //Remote
+//    single<CartRepository> { CartRemoteRepository(get(), get()) }
+//    single<OrderHistoryRepository> { OrderHistoryRemoteRepositoryImpl(get(), get()) }
+
+    //Local
+    single<CartRepository> { CartRepositoryImpl(get()) }
+    single<OrderHistoryRepository> { OrderHistoryRepositoryImpl(get()) }
 }
