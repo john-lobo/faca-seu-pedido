@@ -16,8 +16,8 @@ import org.koin.dsl.module
 val viewModelModule = module {
     single <BaseSchedulerProvider>{ SchedulerProvider() }
     viewModel { HomeViewModel(get(), get(), get(), get()) }
-    viewModel { CartViewModel(get(), get(), get()) }
-    viewModel { OrderHistoryViewModel(get(), get()) }
+    viewModel { CartViewModel(get(), get(), get(), get()) }
+    viewModel { OrderHistoryViewModel(get(), get(), get()) }
     viewModel { DetailsViewModel(get(), get()) }
     viewModel { LoginViewModel(get(), get()) }
     viewModel { RecoverPasswordViewModel(get(), get()) }

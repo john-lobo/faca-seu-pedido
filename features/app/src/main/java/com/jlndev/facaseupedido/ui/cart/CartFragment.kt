@@ -33,7 +33,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
     private lateinit var cartProductAdapter: CartProductAdapter
 
     override fun onInitData() {
-        viewModel.getProductsItems()
+        viewModel.getUser()
     }
 
     override fun onGetViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCartBinding = FragmentCartBinding.inflate(inflater, container, false)
@@ -81,6 +81,24 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
 
     override fun onInitViewModel() {
         with(viewModel) {
+            userLive.observe(viewLifecycleOwner) {
+                when (it) {
+                    is ResponseState.Success -> {
+                        it.data?.let {
+                            viewModel.getProductsItems()
+                        } ?: run {
+                            findNavController().navigate(R.id.action_cart_to_login)
+                        }
+                    }
+
+                    is ResponseState.Error -> {
+                        findNavController().navigate(R.id.action_cart_to_login)
+                    }
+
+                    else -> {}
+                }
+            }
+
             productsItemsLive.observe(viewLifecycleOwner) {
                 when(it) {
                     is ResponseState.Loading -> {

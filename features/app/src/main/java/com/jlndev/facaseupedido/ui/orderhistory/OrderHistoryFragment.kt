@@ -23,7 +23,7 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
     private lateinit var orderHistoryAdapter: OrderHistoryAdapter
 
     override fun onInitData() {
-        viewModel.getAllOrders()
+        viewModel.getUser()
     }
 
     override fun onGetViewBinding(
@@ -55,23 +55,43 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
     }
 
     override fun onInitViewModel() {
-        viewModel.getOrdersHistoryLive.observe(viewLifecycleOwner) {
-            when (it) {
-                is ResponseState.Success -> {
-                    val items = it.data.map { it.toOrderHistoryItem() }
-                    orderHistoryAdapter.submitList(items)
-                    if (items.isNotEmpty()) {
-                        showView()
-                    } else {
-                        showNotFoundOrdersHistoryView()
+        with(viewModel) {
+            getOrdersHistoryLive.observe(viewLifecycleOwner) {
+                when (it) {
+                    is ResponseState.Success -> {
+                        val items = it.data.map { it.toOrderHistoryItem() }
+                        orderHistoryAdapter.submitList(items)
+                        if (items.isNotEmpty()) {
+                            showView()
+                        } else {
+                            showNotFoundOrdersHistoryView()
+                        }
                     }
-                }
 
-                is ResponseState.Error -> {
-                    showErrorView()
-                }
+                    is ResponseState.Error -> {
+                        showErrorView()
+                    }
 
-                else -> {}
+                    else -> {}
+                }
+            }
+
+            userLive.observe(viewLifecycleOwner) {
+                when (it) {
+                    is ResponseState.Success -> {
+                        it.data?.let {
+                            viewModel.getAllOrders()
+                        } ?: run {
+                            findNavController().navigate(R.id.action_order_history_to_login)
+                        }
+                    }
+
+                    is ResponseState.Error -> {
+                        findNavController().navigate(R.id.action_order_history_to_login)
+                    }
+
+                    else -> {}
+                }
             }
         }
     }

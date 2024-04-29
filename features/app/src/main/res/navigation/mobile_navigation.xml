@@ -33,6 +33,16 @@
         <action
             android:id="@+id/action_cart_to_details"
             app:destination="@id/nav_details" />
+
+        <action
+            android:id="@+id/action_cart_to_login"
+            app:destination="@id/nav_login"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -44,6 +54,16 @@
         <action
             android:id="@+id/action_order_history_to_details"
             app:destination="@id/nav_details" />
+
+        <action
+            android:id="@+id/action_order_history_to_login"
+            app:destination="@id/nav_login"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <dialog

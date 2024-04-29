@@ -9,6 +9,8 @@ import com.jlndev.baseservice.ext.processSingle
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.viewModel.BaseViewModel
 import com.jlndev.coreandroid.ext.toCurrency
+import com.jlndev.firebaseservice.data.user.UserRepository
+import com.jlndev.firebaseservice.model.User
 import com.jlndev.productservice.data.remote.model.Cart
 import com.jlndev.productservice.data.repository.CartRepository
 import com.jlndev.productservice.data.repository.OrderHistoryRepository
@@ -17,7 +19,8 @@ import com.jlndev.productservice.data.repository.model.ProductItemModel
 class CartViewModel(
     private val schedulerProvider: BaseSchedulerProvider,
     private val cartRepository: CartRepository,
-    private val orderHistoryRepository: OrderHistoryRepository
+    private val orderHistoryRepository: OrderHistoryRepository,
+    private val userRepository: UserRepository,
 ) : BaseViewModel() {
 
     private val _productsItemsLive = MutableLiveData<ResponseState<Cart>>()
@@ -38,6 +41,25 @@ class CartViewModel(
 
     var totalPrice = MutableLiveData<Double>()
     var totalQuantity = MutableLiveData<Long>()
+
+    private val _userLive = MutableLiveData<ResponseState<User?>>()
+    val userLive : LiveData<ResponseState<User?>>
+        get() = _userLive
+
+    fun getUser() {
+        userRepository.getUser()
+            .processSingle(schedulerProvider)
+            .doOnSubscribe { _userLive.value = ResponseState.Loading(true)}
+            .doOnSuccess {
+                _userLive.value = ResponseState.Loading(false)
+                _userLive.value = ResponseState.Success(it)
+            }
+            .doOnError {
+                _userLive.value = ResponseState.Loading(false)
+                _userLive.value = ResponseState.Error(it)
+            }
+            .disposedBy(disposables)
+    }
 
     fun getProductsItems() {
         cartRepository.getProductsItems()
