@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.jlndev.facaseupedido.databinding.ActivityMainBinding
 
+@Deprecated("Use NewMainActivity")
 class OldMainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration

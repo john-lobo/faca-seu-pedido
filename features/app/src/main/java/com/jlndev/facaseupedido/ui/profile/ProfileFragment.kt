@@ -10,10 +10,13 @@ import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentProfileBinding
 import com.jlndev.facaseupedido.ui.uitls.components.ChangePasswordDialog
 import com.jlndev.facaseupedido.ui.uitls.components.ChangeUsernameDialog
+import com.jlndev.firebaseservice.model.User
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
     override val viewModel: ProfileViewModel by viewModel()
+
+    private var user : User? = null
 
     override fun onInitData() {
         viewModel.getUser()
@@ -25,7 +28,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun onInitViews() {
         binding.nameView.setOnClickListener {
-            ChangeUsernameDialog(requireContext()).show { username ->
+            ChangeUsernameDialog(requireContext(), user?.name).show { username ->
                 viewModel.changeUsername(username)
             }
         }
@@ -47,14 +50,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 when (it) {
                     is ResponseState.Success -> {
                         it.data?.let {
+                            user = it
                             binding.nameView.text = "Nome: ${it.name}"
                             binding.emailView.text = "Email: ${it.email}"
                         } ?: run {
+                            user = null
                             findNavController().navigate(R.id.action_profile_to_login)
                         }
                     }
 
                     is ResponseState.Error -> {
+                        user = null
                         findNavController().navigate(R.id.action_profile_to_login)
                     }
 

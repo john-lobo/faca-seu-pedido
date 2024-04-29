@@ -98,8 +98,7 @@ class CartViewModel(
         cartRepository.deleteProductItem(itemModel)
             .processSingle(schedulerProvider)
             .doOnSuccess {
-                val deleteItem = it.productItems.find { it.id == itemModel.id }!!
-                _deleteProductToCartLive.value = ResponseState.Success(deleteItem)
+                _deleteProductToCartLive.value = ResponseState.Success(itemModel)
                 _deleteProductToCartLive.value = null
                 updateCartValue(it.totalPrice, it.totalQuantity)
             }

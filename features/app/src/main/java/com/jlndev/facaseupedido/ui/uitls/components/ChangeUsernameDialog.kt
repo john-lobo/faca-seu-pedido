@@ -10,7 +10,7 @@ import com.jlndev.facaseupedido.databinding.ChangeUsernameDialogBinding
 import com.jlndev.facaseupedido.databinding.ItemChangePasswordDialogBinding
 import com.jlndev.facaseupedido.databinding.ItemQuantityDialogBinding
 
-class ChangeUsernameDialog(private val context: Context) {
+class ChangeUsernameDialog(private val context: Context, private val username: String?) {
     fun show(onQuantityEntered: (String) -> Unit) {
         val binding = ChangeUsernameDialogBinding.inflate(LayoutInflater.from(context))
         val builder = AlertDialog.Builder(context)
@@ -19,6 +19,9 @@ class ChangeUsernameDialog(private val context: Context) {
             builder.create().also { dialog ->
                 dialog.setView(binding.root)
                 titleDialogView.text = context.getString(R.string.change_username)
+                username?.let {
+                    nameInputView.setText(it)
+                }
 
                 val fields = listOf(
                     nameInputView,
