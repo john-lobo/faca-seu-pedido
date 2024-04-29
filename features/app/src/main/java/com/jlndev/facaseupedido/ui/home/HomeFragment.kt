@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.gone
@@ -22,21 +20,15 @@ import com.jlndev.facaseupedido.ui.uitls.components.QuantityInputDialog
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItem
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItemModel
 import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
-import com.jlndev.firebaseservice.data.user.UserSingleton
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
-
-    private val firebaseAuth: FirebaseAuth by inject()
-    private val fireStore: FirebaseFirestore by inject()
-
     override val viewModel: HomeViewModel by viewModel()
     private lateinit var productAdapter: ProductAdapter
 
     override fun onInitData() {
-        UserSingleton.loadUserFromFirebase(fireStore, firebaseAuth)
         viewModel.getProductsItems()
+        viewModel.getUser()
     }
 
     override fun onGetViewBinding(
@@ -51,7 +43,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             }
 
             override fun addProductToCart(productItem: ProductItem) {
-                firebaseAuth.currentUser?.let {
+                viewModel.userLive.value?.let {
                     QuantityInputDialog(requireContext()).show { quantity ->
                         if(quantity > 0) {
                             productItem.quantity = quantity
@@ -65,23 +57,38 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         })
 
         binding.recyclerProductItemsView.adapter = productAdapter
-
-        UserSingleton.getUser().observe(viewLifecycleOwner) {
-            with(binding.nomeLoginView) {
-                it?.let {
-                    text = getString(R.string.welcome_user, it.name.split(" ")[0])
-                } ?: run {
-                    text = getString(R.string.login_or_register)
-                    setOnClickListener {
-                        findNavController().navigate(R.id.action_home_to_login)
-                    }
-                }
-            }
-        }
     }
 
     override fun onInitViewModel() {
         with(viewModel) {
+            userLive.observe(viewLifecycleOwner) {
+                when (it) {
+                    is ResponseState.Success -> {
+                        with(binding.nomeLoginView) {
+                            it.data?.let {
+                                text = getString(R.string.welcome_user, it.name.split(" ")[0])
+                            } ?: run {
+                                text = getString(R.string.login_or_register)
+                                setOnClickListener {
+                                    findNavController().navigate(R.id.action_home_to_login)
+                                }
+                            }
+                        }
+                    }
+
+                    is ResponseState.Error -> {
+                        with(binding.nomeLoginView) {
+                            text = getString(R.string.login_or_register)
+                            setOnClickListener {
+                                findNavController().navigate(R.id.action_home_to_login)
+                            }
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
+
             productsItemsLive.observe(viewLifecycleOwner) {
                 when (it) {
                     is ResponseState.Loading -> {
@@ -125,7 +132,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
-    override fun showLoading() {
+    private fun showLoading() {
         with(binding) {
             loadingView.visible()
             recyclerProductItemsView.gone()
@@ -133,18 +140,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
-    override fun hideLoading() {
+    private fun hideLoading() {
         binding.loadingView.gone()
     }
 
-    override fun showView() {
+    private fun showView() {
         with(binding) {
             errorView.root.gone()
             recyclerProductItemsView.visible()
         }
     }
 
-    override fun showErrorView() {
+    private fun showErrorView() {
         with(binding) {
             recyclerProductItemsView.gone()
             errorView.root.visible()

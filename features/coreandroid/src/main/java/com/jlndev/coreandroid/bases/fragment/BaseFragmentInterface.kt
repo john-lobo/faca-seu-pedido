@@ -18,10 +18,6 @@ interface BaseFragmentInterface<VB : ViewBinding, VM> {
     fun onGetViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
     fun onInitViews()
     fun onInitViewModel()
-    fun showLoading()
-    fun hideLoading()
-    fun showView()
-    fun showErrorView()
 
     fun onCreateView(
         inflater: LayoutInflater,

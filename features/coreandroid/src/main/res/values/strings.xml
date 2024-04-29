@@ -9,6 +9,8 @@
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
     <string name="confirm_password">Confirmação de senha</string>
+    <string name="old_password">Senha atual</string>
+    <string name="new_password">Nova senha</string>
 
     <!--  masks  -->
     <string name="mask_cpf">###.###.###-##</string>

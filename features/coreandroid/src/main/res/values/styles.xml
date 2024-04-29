@@ -10,7 +10,7 @@
 
     <style name="Style.Button.Black" parent="android:Widget.Button">
         <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/background_button_black</item>
+        <item name="android:background">@drawable/base_button_black</item>
     </style>
 
     <style name="Style.Button.White" parent="android:Widget.Button">
@@ -24,16 +24,13 @@
         <item name="android:background">@drawable/background_button_item_product_black</item>
     </style>
 
-    <style name="Style.Button.Black.Cart" parent="android:Widget.Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/background_button_cart_black</item>
-    </style>
-
     <style name="Style.TextInputLayoutRounded" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxCornerRadiusBottomEnd">8dp</item>
         <item name="boxCornerRadiusBottomStart">8dp</item>
         <item name="boxCornerRadiusTopEnd">8dp</item>
         <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="cursorErrorColor">@color/red</item>
+        <item name="cursorColor">@color/black</item>
     </style>
 
 </resources>

@@ -11,6 +11,8 @@ import com.jlndev.firebaseservice.data.recover_password_service.RecoverPasswordR
 import com.jlndev.firebaseservice.data.register_user_service.RegisterUserDataSource
 import com.jlndev.firebaseservice.data.register_user_service.RegisterUserFirebaseDataSource
 import com.jlndev.firebaseservice.data.register_user_service.RegisterUserRepository
+import com.jlndev.firebaseservice.data.user.UserRepository
+import com.jlndev.firebaseservice.data.user.UserRepositoryImpl
 import org.koin.dsl.module
 
 val firebaseServiceModule = module {
@@ -22,6 +24,8 @@ val firebaseServiceModule = module {
 
     single<RegisterUserDataSource> { RegisterUserFirebaseDataSource(get(), get()) }
     single { RegisterUserRepository(get()) }
+
+    single<UserRepository> { UserRepositoryImpl(get(), get()) }
 
     single { FirebaseAuth.getInstance() }
     single { FirebaseFirestore.getInstance() }

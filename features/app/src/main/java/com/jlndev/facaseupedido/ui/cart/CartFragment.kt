@@ -173,7 +173,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
         }
     }
 
-    override fun showLoading() {
+    private fun showLoading() {
         with(binding) {
             recyclerCartProductItemsView.gone()
             confirmOrderView.root.gone()
@@ -183,11 +183,11 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
         }
     }
 
-    override fun hideLoading() {
+    private fun hideLoading() {
         binding.loadingView.gone()
     }
 
-    override fun showView() {
+    private fun showView() {
         with(binding) {
             errorView.root.gone()
             notProductsCartView.root.gone()
@@ -217,7 +217,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
         }
     }
 
-    override fun showErrorView() {
+    private fun showErrorView() {
         with(binding) {
             confirmOrderView.root.gone()
             notProductsCartView.root.gone()

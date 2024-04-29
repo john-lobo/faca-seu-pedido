@@ -9,24 +9,15 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.jlndev.facaseupedido.databinding.ActivityMainBinding
-import com.jlndev.firebaseservice.data.user.UserSingleton
-import org.koin.android.ext.android.inject
 
 class OldMainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val firebaseAuth: FirebaseAuth by inject()
-    private val fireStore: FirebaseFirestore by inject()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        UserSingleton.loadUserFromFirebase(fireStore, firebaseAuth)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

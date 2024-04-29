@@ -85,22 +85,6 @@ class RegisterUserFragment : BaseFragment<FragmentRegisterUserBinding, RegisterU
         }
     }
 
-    override fun showLoading() {
-
-    }
-
-    override fun hideLoading() {
-
-    }
-
-    override fun showView() {
-
-    }
-
-    override fun showErrorView() {
-
-    }
-
     private fun registerUser() {
         viewModel.registerUser(getUser())
     }

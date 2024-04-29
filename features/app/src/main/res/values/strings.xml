@@ -9,6 +9,7 @@
 
     <string name="menu_cart">Carrinho</string>
     <string name="menu_order_history">Pedidos</string>
+    <string name="menu_my_account">Conta</string>
 
     <string name="generic_error">Ops! \nOcorreu um erro.</string>
     <string name="informe_quantity">Informe a quantidade</string>
@@ -53,4 +54,9 @@
     <string name="confirm">Confirmar</string>
     <string name="welcome_user">Oi, %1$s ;)</string>
     <string name="login_or_register"><u>Faça login ou cadastre-se</u></string>
+    <string name="logout">Sair</string>
+    <string name="change_password">Alterar senha</string>
+    <string name="change_username">Alterar nome</string>
+    <string name="change_username_success">Senha alterada com sucesso</string>
+    <string name="change_username_error">Erro ao alterar senha</string>
 </resources>

@@ -11,7 +11,8 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
 
-        <action android:id="@+id/action_home_to_details"
+        <action
+            android:id="@+id/action_home_to_details"
             app:destination="@id/nav_details" />
 
         <action
@@ -20,16 +21,17 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_cart"
         android:name="com.jlndev.facaseupedido.ui.cart.CartFragment"
         android:label="@string/menu_cart"
-        tools:layout="@layout/fragment_cart" >
+        tools:layout="@layout/fragment_cart">
 
-        <action android:id="@+id/action_cart_to_details"
+        <action
+            android:id="@+id/action_cart_to_details"
             app:destination="@id/nav_details" />
     </fragment>
 
@@ -39,8 +41,9 @@
         android:label="@string/menu_order_history"
         tools:layout="@layout/fragment_order_history">
 
-        <action android:id="@+id/action_order_history_to_details"
-        app:destination="@id/nav_details" />
+        <action
+            android:id="@+id/action_order_history_to_details"
+            app:destination="@id/nav_details" />
     </fragment>
 
     <dialog
@@ -62,7 +65,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
 
@@ -70,7 +73,7 @@
         android:id="@+id/nav_login"
         android:name="com.jlndev.facaseupedido.ui.login.LoginFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
 
         <action
             android:id="@+id/action_login_to_home"
@@ -82,7 +85,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
 
         <action
             android:id="@+id/action_login_to_register_user"
@@ -90,7 +93,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
 
@@ -98,6 +101,22 @@
         android:id="@+id/nav_recover_passoword"
         android:name="com.montapp.montapp.view.ui.recover_password.RecoverPasswordFragment"
         android:label="Recuperar Senha"
-        tools:layout="@layout/fragment_recover_password">
+        tools:layout="@layout/fragment_recover_password"/>
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.jlndev.facaseupedido.ui.profile.ProfileFragment"
+        android:label="Minha conta"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profile_to_login"
+            app:destination="@id/nav_login"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 </navigation>

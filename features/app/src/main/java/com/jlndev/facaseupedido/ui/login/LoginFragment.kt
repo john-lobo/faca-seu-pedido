@@ -93,20 +93,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
         }
     }
 
-    override fun showLoading() {
+    private fun showLoading() {
         binding.loadingView.visible()
     }
 
-    override fun hideLoading() {
+    private fun hideLoading() {
         binding.loadingView.gone()
-    }
-
-    override fun showView() {
-
-    }
-
-    override fun showErrorView() {
-
     }
 
     private fun showSuccess() {

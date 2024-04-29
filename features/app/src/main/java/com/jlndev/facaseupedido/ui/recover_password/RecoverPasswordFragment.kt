@@ -61,22 +61,6 @@ class RecoverPasswordFragment : BaseFragment<FragmentRecoverPasswordBinding, Rec
         }
     }
 
-    override fun showLoading() {
-        TODO("Not yet implemented")
-    }
-
-    override fun hideLoading() {
-        TODO("Not yet implemented")
-    }
-
-    override fun showView() {
-        TODO("Not yet implemented")
-    }
-
-    override fun showErrorView() {
-        TODO("Not yet implemented")
-    }
-
     companion object {
         const val EXTRA_USER_EMAIL = "USER_EMAIL"
     }

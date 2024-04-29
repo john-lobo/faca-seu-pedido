@@ -84,21 +84,4 @@ class DetailsFragment: BaseBottomSheetFragment<FragmentDetailsBinding, DetailsVi
             }
         }
     }
-
-
-    override fun showLoading() {
-        // nothing
-    }
-
-    override fun hideLoading() {
-        // nothing
-    }
-
-    override fun showView() {
-        // nothing
-    }
-
-    override fun showErrorView() {
-        // nothing
-    }
 }

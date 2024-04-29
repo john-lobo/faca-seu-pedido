@@ -76,15 +76,7 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
         }
     }
 
-    override fun showLoading() {
-
-    }
-
-    override fun hideLoading() {
-
-    }
-
-    override fun showView() {
+    private fun showView() {
         with(binding) {
             errorView.root.gone()
             notFoundOrderHistoryView.root.gone()
@@ -92,7 +84,7 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
         }
     }
 
-    override fun showErrorView() {
+    private fun showErrorView() {
         with(binding) {
             notFoundOrderHistoryView.root.gone()
             recyclerOrdersHistoryItemsView.gone()

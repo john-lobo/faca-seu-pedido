@@ -23,6 +23,9 @@ class ErrorTextInputWatcher(
 
         if (inputText.isBlank()) {
             textInputLayout.error = errorMessage
+            textInputLayout.requestFocus() // Request focus on EditText
+
+            textInputLayout.editText?.showSoftInputOnFocus = true
             onValidInput.invoke()
             return
         } else {
@@ -35,7 +38,7 @@ class ErrorTextInputWatcher(
                 getString(R.string.cpf) -> handleCPFValidation(inputText)
                 getString(R.string.birthday) -> handleDateOfBirthValidation(inputText)
                 getString(R.string.full_name) -> handleFullNameValidation(inputText)
-                getString(R.string.password), getString(R.string.confirm_password) -> handlePasswordValidation(inputText)
+                getString(R.string.password), getString(R.string.confirm_password), getString(R.string.old_password), getString(R.string.new_password) -> handlePasswordValidation(inputText)
             }
         }
 
@@ -118,6 +121,7 @@ class ErrorTextInputWatcher(
         return numbers[9] == dv1 && numbers[10] == dv2
     }
 }
+
 
 
 
