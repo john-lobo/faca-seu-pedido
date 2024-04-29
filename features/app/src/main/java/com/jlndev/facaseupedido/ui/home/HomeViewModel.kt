@@ -29,8 +29,6 @@ class HomeViewModel(
     val addProductToCartLive : LiveData<ResponseState<Cart>?>
         get() = _addProductToCartLive
 
-    private var user = MutableLiveData<User?>()
-
     private val _userLive = MutableLiveData<ResponseState<User?>>()
     val userLive : LiveData<ResponseState<User?>>
         get() = _userLive

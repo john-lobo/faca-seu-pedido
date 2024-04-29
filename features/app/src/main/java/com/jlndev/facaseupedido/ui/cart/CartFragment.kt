@@ -102,10 +102,12 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
             productsItemsLive.observe(viewLifecycleOwner) {
                 when(it) {
                     is ResponseState.Loading -> {
-                        if(it.isLoading) {
-                            showLoading()
-                        } else {
-                            hideLoading()
+                        if(cartProductAdapter.getProductItems().isEmpty()) {
+                            if(it.isLoading) {
+                                showLoading()
+                            } else {
+                                hideLoading()
+                            }
                         }
                     }
                     is ResponseState.Success -> {

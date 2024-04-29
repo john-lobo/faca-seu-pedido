@@ -20,14 +20,20 @@ import com.jlndev.facaseupedido.ui.uitls.components.QuantityInputDialog
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItem
 import com.jlndev.facaseupedido.ui.uitls.ext.toProductItemModel
 import com.jlndev.facaseupedido.ui.uitls.model.ProductItem
+import com.jlndev.firebaseservice.model.User
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     override val viewModel: HomeViewModel by viewModel()
     private lateinit var productAdapter: ProductAdapter
 
+    private var user: User? = null
     override fun onInitData() {
         viewModel.getProductsItems()
+    }
+
+    override fun onStart() {
+        super.onStart()
         viewModel.getUser()
     }
 
@@ -43,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             }
 
             override fun addProductToCart(productItem: ProductItem) {
-                viewModel.userLive.value?.let {
+                user?.let {
                     QuantityInputDialog(requireContext()).show { quantity ->
                         if(quantity > 0) {
                             productItem.quantity = quantity
@@ -67,7 +73,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                         with(binding.nomeLoginView) {
                             it.data?.let {
                                 text = getString(R.string.welcome_user, it.name.split(" ")[0])
+                                user = it
                             } ?: run {
+                                user = null
                                 text = getString(R.string.login_or_register)
                                 setOnClickListener {
                                     findNavController().navigate(R.id.action_home_to_login)
@@ -78,6 +86,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
                     is ResponseState.Error -> {
                         with(binding.nomeLoginView) {
+                            user = null
                             text = getString(R.string.login_or_register)
                             setOnClickListener {
                                 findNavController().navigate(R.id.action_home_to_login)

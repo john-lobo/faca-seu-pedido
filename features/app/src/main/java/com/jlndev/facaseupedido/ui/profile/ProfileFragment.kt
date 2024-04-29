@@ -3,8 +3,6 @@ package com.jlndev.facaseupedido.ui.profile
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.showSnackbar
@@ -12,7 +10,6 @@ import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentProfileBinding
 import com.jlndev.facaseupedido.ui.uitls.components.ChangePasswordDialog
 import com.jlndev.facaseupedido.ui.uitls.components.ChangeUsernameDialog
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
@@ -21,7 +18,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     override fun onInitData() {
         viewModel.getUser()
     }
-
     override fun onGetViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
