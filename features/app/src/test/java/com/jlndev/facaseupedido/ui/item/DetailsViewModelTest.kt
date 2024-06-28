@@ -1,7 +1,7 @@
 package com.jlndev.facaseupedido.ui.item
 
 import androidx.lifecycle.Observer
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.facaseupedido.BaseViewModelTest
 import com.jlndev.productservice.data.repository.CartRepository
 import com.jlndev.productservice.data.repository.model.ProductItemModel
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 class DetailsViewModelTest : BaseViewModelTest() {
 
-    private lateinit var onAddProductToCartObserver: Observer<ResponseState<ProductItemModel>?>
+    private lateinit var onAddProductToCartObserver: Observer<ViewState<ProductItemModel>?>
     private lateinit var cartRepository: CartRepository
     private lateinit var viewModel: DetailsViewModel
 
@@ -37,7 +37,7 @@ class DetailsViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { cartRepository.getProductItem(productItemModel) }
-        verify { onAddProductToCartObserver.onChanged(ResponseState.Success(productItemModel)) }
+        verify { onAddProductToCartObserver.onChanged(ViewState.Success(productItemModel)) }
         verify { onAddProductToCartObserver.onChanged(null) }
     }
 

@@ -8,13 +8,12 @@ import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.gone
 import com.jlndev.coreandroid.ext.showSnackbar
 import com.jlndev.coreandroid.ext.toCurrency
 import com.jlndev.coreandroid.ext.visible
-import com.jlndev.facaseupedido.NewMainActivity
 import com.jlndev.facaseupedido.R
 import com.jlndev.facaseupedido.databinding.FragmentCartBinding
 import com.jlndev.facaseupedido.ui.cart.adapter.CartProductAdapter
@@ -83,7 +82,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
         with(viewModel) {
             userLive.observe(viewLifecycleOwner) {
                 when (it) {
-                    is ResponseState.Success -> {
+                    is ViewState.Success -> {
                         it.data?.let {
                             viewModel.getProductsItems()
                         } ?: run {
@@ -91,7 +90,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                         }
                     }
 
-                    is ResponseState.Error -> {
+                    is ViewState.Error -> {
                         findNavController().navigate(R.id.action_cart_to_login)
                     }
 
@@ -101,7 +100,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
 
             productsItemsLive.observe(viewLifecycleOwner) {
                 when(it) {
-                    is ResponseState.Loading -> {
+                    is ViewState.Loading -> {
                         if(cartProductAdapter.getProductItems().isEmpty()) {
                             if(it.isLoading) {
                                 showLoading()
@@ -110,7 +109,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                             }
                         }
                     }
-                    is ResponseState.Success -> {
+                    is ViewState.Success -> {
                         val items = it.data.productItems.map { it.toProductItem() }
                         cartProductAdapter.submitList(items)
                         if(items.isNotEmpty()) {
@@ -119,7 +118,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
                             showViewProductNotFound()
                         }
                     }
-                    is ResponseState.Error -> {
+                    is ViewState.Error -> {
                         showErrorView()
                     }
                 }
@@ -128,11 +127,11 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
             updateQuantityProductToCartLive.observe(viewLifecycleOwner) {
                 it?.let {
                     when(it) {
-                        is ResponseState.Success -> {
+                        is ViewState.Success -> {
                             cartProductAdapter.updateItem(it.data.toProductItem())
                             requireView().showSnackbar(getString(R.string.updated_quantity_product))
                         }
-                        is ResponseState.Error -> {
+                        is ViewState.Error -> {
                             requireView().showSnackbar(getString(R.string.updated_quantity_product_error)) {
                                 it.action?.invoke()
                             }
@@ -146,14 +145,14 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
             deleteProductToCartLive.observe(viewLifecycleOwner) {
                 it?.let {
                     when(it) {
-                        is ResponseState.Success -> {
+                        is ViewState.Success -> {
                             cartProductAdapter.removeItem(it.data.toProductItem())
                             requireView().showSnackbar(getString(R.string.deleted_product))
                             if(cartProductAdapter.getProductItems().isEmpty()) {
                                 showViewProductNotFound()
                             }
                         }
-                        is ResponseState.Error -> {
+                        is ViewState.Error -> {
                             requireView().showSnackbar(getString(R.string.deleted_product_error)) {
                                 it.action?.invoke()
                             }
@@ -167,11 +166,11 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
             createOrderLive.observe(viewLifecycleOwner) {
                 it?.let {
                     when(it) {
-                        is ResponseState.Success -> {
+                        is ViewState.Success -> {
                             cartProductAdapter.submitList(listOf())
                             showViewSuccessOrder()
                         }
-                        is ResponseState.Error -> {
+                        is ViewState.Error -> {
                             requireView().showSnackbar(getString(R.string.create_order_error)) {
                                 it.action?.invoke()
                             }
@@ -323,7 +322,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>() {
     }
 
     private fun navToHome() {
-        requireActivity().supportFragmentManager.popBackStackImmediate()
+        findNavController().popBackStack()
     }
 
     private fun navToOrderHistory() {

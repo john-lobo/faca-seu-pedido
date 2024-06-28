@@ -3,7 +3,7 @@ package com.jlndev.facaseupedido.ui.profile
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.showSnackbar
 import com.jlndev.facaseupedido.R
@@ -48,7 +48,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         with(viewModel) {
             userLive.observe(viewLifecycleOwner) {
                 when (it) {
-                    is ResponseState.Success -> {
+                    is ViewState.Success -> {
                         it.data?.let {
                             user = it
                             binding.nameView.text = "Nome: ${it.name}"
@@ -59,7 +59,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                         }
                     }
 
-                    is ResponseState.Error -> {
+                    is ViewState.Error -> {
                         user = null
                         findNavController().navigate(R.id.action_profile_to_login)
                     }
@@ -70,11 +70,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
             changePasswordLive.observe(viewLifecycleOwner) {
                 when (it) {
-                    is ResponseState.Loading -> {}
-                    is ResponseState.Success -> {
+                    is ViewState.Loading -> {}
+                    is ViewState.Success -> {
                         requireView().showSnackbar(getString(R.string.change_username_success))
                     }
-                    is ResponseState.Error -> {
+                    is ViewState.Error -> {
                         requireView().showSnackbar(getString(R.string.change_username_error))
                     }
                 }

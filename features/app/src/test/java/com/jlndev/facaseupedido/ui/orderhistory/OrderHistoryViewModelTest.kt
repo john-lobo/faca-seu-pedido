@@ -1,7 +1,7 @@
 package com.jlndev.facaseupedido.ui.orderhistory
 
 import androidx.lifecycle.Observer
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.facaseupedido.BaseViewModelTest
 import com.jlndev.productservice.data.repository.OrderHistoryRepository
 import com.jlndev.productservice.data.repository.model.OrderHistoryItemModel
@@ -16,7 +16,7 @@ class OrderHistoryViewModelTest: BaseViewModelTest() {
 
     private lateinit var viewModel: OrderHistoryViewModel
     private lateinit var orderHistoryRepository: OrderHistoryRepository
-    private lateinit var onGetOrdersHistoryObserver: Observer<ResponseState<List<OrderHistoryItemModel>>>
+    private lateinit var onGetOrdersHistoryObserver: Observer<ViewState<List<OrderHistoryItemModel>>>
 
     private val orderHistoryItemModel = OrderHistoryItemModel(1, listOf(),1, 100.0)
 
@@ -37,7 +37,7 @@ class OrderHistoryViewModelTest: BaseViewModelTest() {
 
         // Assert
         verify { orderHistoryRepository.getAllOrders() }
-        verify { onGetOrdersHistoryObserver.onChanged(ResponseState.Success(listOf(orderHistoryItemModel))) }
+        verify { onGetOrdersHistoryObserver.onChanged(ViewState.Success(listOf(orderHistoryItemModel))) }
     }
 
     @Test
@@ -53,7 +53,7 @@ class OrderHistoryViewModelTest: BaseViewModelTest() {
 
         // Assert
         verify { orderHistoryRepository.getAllOrders() }
-        verify { onGetOrdersHistoryObserver.onChanged(ResponseState.Error(error)) }
+        verify { onGetOrdersHistoryObserver.onChanged(ViewState.Error(error)) }
     }
 
     private fun instantiateViewModel(): OrderHistoryViewModel {

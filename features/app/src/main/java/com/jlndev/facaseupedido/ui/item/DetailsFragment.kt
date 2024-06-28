@@ -2,7 +2,7 @@ package com.jlndev.facaseupedido.ui.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.coreandroid.bases.fragment.BaseBottomSheetFragment
 import com.jlndev.coreandroid.ext.getTypedParcelable
 import com.jlndev.coreandroid.ext.gone
@@ -70,11 +70,11 @@ class DetailsFragment: BaseBottomSheetFragment<FragmentDetailsBinding, DetailsVi
         viewModel.addProductToCartLive.observe(viewLifecycleOwner) {
             it?.let { state ->
                 when (state) {
-                    is ResponseState.Success -> {
+                    is ViewState.Success -> {
                         dismiss()
                         requireActivity().showSnackbar(getString(R.string.product_added_to_cart))
                     }
-                    is ResponseState.Error -> {
+                    is ViewState.Error -> {
                         dismiss()
                         requireActivity().showSnackbar(getString(R.string.error_add_to_cart))
                     }

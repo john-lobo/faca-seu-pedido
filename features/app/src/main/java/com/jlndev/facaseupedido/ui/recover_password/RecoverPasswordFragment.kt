@@ -3,7 +3,7 @@ package com.montapp.montapp.view.ui.recover_password
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.customview.DialogCustomView
 import com.jlndev.coreandroid.ext.gone
@@ -42,7 +42,7 @@ class RecoverPasswordFragment : BaseFragment<FragmentRecoverPasswordBinding, Rec
     override fun onInitViewModel() {
         viewModel.recoverPasswordLive.observe(viewLifecycleOwner) { viewState ->
             when (viewState) {
-                is ResponseState.Loading -> {
+                is ViewState.Loading -> {
                     if (viewState.isLoading) {
                         binding.loadingView.visible()
                     } else {
@@ -50,11 +50,11 @@ class RecoverPasswordFragment : BaseFragment<FragmentRecoverPasswordBinding, Rec
                     }
                 }
 
-                is ResponseState.Success -> {
+                is ViewState.Success -> {
                     showAlert()
                 }
 
-                is ResponseState.Error -> {
+                is ViewState.Error -> {
                     showError(viewState.throwable.message!!, view = binding.loadingView)
                 }
             }

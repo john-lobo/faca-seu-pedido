@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
-import com.jlndev.coreandroid.customview.DialogCustomView
 import com.jlndev.coreandroid.ext.gone
 import com.jlndev.coreandroid.ext.hideKeyboard
 import com.jlndev.coreandroid.ext.observerErrorListener
@@ -68,7 +67,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
     override fun onInitViewModel() {
         viewModel.loginLive.observe(viewLifecycleOwner) {
             when (it) {
-                is ResponseState.Loading -> {
+                is ViewState.Loading -> {
                     if(it.isLoading) {
                         showLoading()
                         binding.loginButtonView.isEnabled = false
@@ -76,11 +75,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
                         hideLoading()
                     }
                 }
-                is ResponseState.Success<User> -> {
+                is ViewState.Success<User> -> {
                     hideLoading()
                     showSuccess()
                 }
-                is ResponseState.Error -> {
+                is ViewState.Error -> {
                     hideLoading()
                     binding.loginButtonView.isEnabled = true
                     val message = it.throwable.message ?: getString(com.jlndev.coreandroid.R.string.unknown_error)

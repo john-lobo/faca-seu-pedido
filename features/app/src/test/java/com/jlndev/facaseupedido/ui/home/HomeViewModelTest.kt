@@ -1,7 +1,7 @@
 package com.jlndev.facaseupedido.ui.home
 
 import androidx.lifecycle.Observer
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.facaseupedido.BaseViewModelTest
 import com.jlndev.productservice.data.repository.CartRepository
 import com.jlndev.productservice.data.repository.ProductRepository
@@ -18,8 +18,8 @@ class HomeViewModelTest : BaseViewModelTest() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var productRepository: ProductRepository
     private lateinit var cartRepository: CartRepository
-    private lateinit var onProductsItemsObserver: Observer<ResponseState<List<ProductItemModel>>>
-    private lateinit var onAddProductToCartObserver: Observer<ResponseState<ProductItemModel>?>
+    private lateinit var onProductsItemsObserver: Observer<ViewState<List<ProductItemModel>>>
+    private lateinit var onAddProductToCartObserver: Observer<ViewState<ProductItemModel>?>
 
     private val productItemModel = ProductItemModel(1, "titulo","descrição", 100.0, "imagem", 1)
 
@@ -42,7 +42,7 @@ class HomeViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { productRepository.getProductsItems() }
-        verify { onProductsItemsObserver.onChanged(ResponseState.Success(listOf(productItemModel))) }
+        verify { onProductsItemsObserver.onChanged(ViewState.Success(listOf(productItemModel))) }
     }
 
     @Test
@@ -58,7 +58,7 @@ class HomeViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { productRepository.getProductsItems() }
-        verify { onProductsItemsObserver.onChanged(ResponseState.Error(error)) }
+        verify { onProductsItemsObserver.onChanged(ViewState.Error(error)) }
     }
 
     @Test
@@ -72,7 +72,7 @@ class HomeViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { cartRepository.getProductItem(productItemModel) }
-        verify { onAddProductToCartObserver.onChanged(ResponseState.Success(productItemModel)) }
+        verify { onAddProductToCartObserver.onChanged(ViewState.Success(productItemModel)) }
         verify { onAddProductToCartObserver.onChanged(null) }
     }
 

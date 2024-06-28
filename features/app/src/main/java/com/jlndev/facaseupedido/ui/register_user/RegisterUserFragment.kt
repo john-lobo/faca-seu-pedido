@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.customview.DialogCustomView
 import com.jlndev.coreandroid.ext.gone
@@ -66,17 +66,17 @@ class RegisterUserFragment : BaseFragment<FragmentRegisterUserBinding, RegisterU
     override fun onInitViewModel() {
         viewModel.registerUserLive.observe(viewLifecycleOwner) { viewState ->
             when(viewState) {
-                is ResponseState.Loading -> {
+                is ViewState.Loading -> {
                    if(viewState.isLoading) {
                        binding.loadingView.visible()
                    } else {
                        binding.loadingView.gone()
                    }
                 }
-                is ResponseState.Success -> {
+                is ViewState.Success -> {
                     showAlert(viewState.data)
                 }
-                is ResponseState.Error -> {
+                is ViewState.Error -> {
                     showError(viewState.throwable.message!!, getString(com.jlndev.coreandroid.R.string.try_again)) {
                         registerUser()
                     }

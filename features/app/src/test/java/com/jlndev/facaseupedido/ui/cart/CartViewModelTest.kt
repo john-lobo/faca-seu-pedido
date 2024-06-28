@@ -1,7 +1,7 @@
 package com.jlndev.facaseupedido.ui.cart
 
 import androidx.lifecycle.Observer
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.facaseupedido.BaseViewModelTest
 import com.jlndev.productservice.data.repository.CartRepository
 import com.jlndev.productservice.data.repository.OrderHistoryRepository
@@ -19,9 +19,9 @@ class CartViewModelTest : BaseViewModelTest() {
     private lateinit var viewModel: CartViewModel
     private lateinit var cartRepository: CartRepository
     private lateinit var orderHistoryRepository: OrderHistoryRepository
-    private lateinit var onProductsItemsObserver: Observer<ResponseState<List<ProductItemModel>>>
-    private lateinit var onProductToCartObserver: Observer<ResponseState<ProductItemModel>?>
-    private lateinit var onCreateOrderLiveObserver: Observer<ResponseState<Unit>?>
+    private lateinit var onProductsItemsObserver: Observer<ViewState<List<ProductItemModel>>>
+    private lateinit var onProductToCartObserver: Observer<ViewState<ProductItemModel>?>
+    private lateinit var onCreateOrderLiveObserver: Observer<ViewState<Unit>?>
 
     private val productItemModel = ProductItemModel(1, "titulo","descrição", 100.0, "imagem", 1)
 
@@ -45,7 +45,7 @@ class CartViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { cartRepository.getProductsItems() }
-        verify { onProductsItemsObserver.onChanged(ResponseState.Success(listOf(productItemModel))) }
+        verify { onProductsItemsObserver.onChanged(ViewState.Success(listOf(productItemModel))) }
     }
 
     @Test
@@ -61,7 +61,7 @@ class CartViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { cartRepository.getProductsItems() }
-        verify { onProductsItemsObserver.onChanged(ResponseState.Error(error)) }
+        verify { onProductsItemsObserver.onChanged(ViewState.Error(error)) }
     }
 
     @Test
@@ -75,7 +75,7 @@ class CartViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { cartRepository.insertProductItem(productItemModel) }
-        verify { onProductToCartObserver.onChanged(ResponseState.Success(productItemModel)) }
+        verify { onProductToCartObserver.onChanged(ViewState.Success(productItemModel)) }
         verify { onProductToCartObserver.onChanged(null) }
     }
 
@@ -105,7 +105,7 @@ class CartViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { cartRepository.deleteProductItem(productItemModel) }
-        verify { onProductToCartObserver.onChanged(ResponseState.Success(productItemModel)) }
+        verify { onProductToCartObserver.onChanged(ViewState.Success(productItemModel)) }
         verify { onProductToCartObserver.onChanged(null) }
     }
 
@@ -135,7 +135,7 @@ class CartViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { cartRepository.deleteAllProductsItems() }
-        verify { onProductsItemsObserver.onChanged(ResponseState.Success(listOf())) }
+        verify { onProductsItemsObserver.onChanged(ViewState.Success(listOf())) }
     }
 
     @Test
@@ -151,7 +151,7 @@ class CartViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { cartRepository.deleteAllProductsItems() }
-        verify { onProductsItemsObserver.onChanged(ResponseState.Error(error)) }
+        verify { onProductsItemsObserver.onChanged(ViewState.Error(error)) }
     }
 
     @Test
@@ -165,9 +165,9 @@ class CartViewModelTest : BaseViewModelTest() {
 
         // Assert
         verify { orderHistoryRepository.insertOrder(listOf(productItemModel)) }
-        verify { onCreateOrderLiveObserver.onChanged(ResponseState.Success(Unit)) }
+        verify { onCreateOrderLiveObserver.onChanged(ViewState.Success(Unit)) }
         verify { onCreateOrderLiveObserver.onChanged(null) }
-        verify { onProductsItemsObserver.onChanged(ResponseState.Success(listOf())) }
+        verify { onProductsItemsObserver.onChanged(ViewState.Success(listOf())) }
     }
 
     @Test

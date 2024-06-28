@@ -9,6 +9,7 @@ import org.koin.android.ext.android.inject
 interface UserRepository{
 
     fun getUser() : Single<User>
+
     fun changeUsername(newUsername: String) : Single<User>
 
     fun changePassword(newPassword: String, lastPassword: String): Single<Unit>

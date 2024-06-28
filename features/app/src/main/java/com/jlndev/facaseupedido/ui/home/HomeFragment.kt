@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.gone
 import com.jlndev.coreandroid.ext.showSnackbar
@@ -69,7 +69,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         with(viewModel) {
             userLive.observe(viewLifecycleOwner) {
                 when (it) {
-                    is ResponseState.Success -> {
+                    is ViewState.Success -> {
                         with(binding.nomeLoginView) {
                             it.data?.let {
                                 text = getString(R.string.welcome_user, it.name.split(" ")[0])
@@ -84,7 +84,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                         }
                     }
 
-                    is ResponseState.Error -> {
+                    is ViewState.Error -> {
                         with(binding.nomeLoginView) {
                             user = null
                             text = getString(R.string.login_or_register)
@@ -100,20 +100,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
             productsItemsLive.observe(viewLifecycleOwner) {
                 when (it) {
-                    is ResponseState.Loading -> {
+                    is ViewState.Loading -> {
                         if (it.isLoading) {
                             showLoading()
                         } else {
                             hideLoading()
                         }
                     }
-                    is ResponseState.Success -> {
+                    is ViewState.Success -> {
                         val productItems = it.data.map { it.toProductItem() }
                         productAdapter.submitList(productItems)
                         showView()
                     }
 
-                    is ResponseState.Error -> {
+                    is ViewState.Error -> {
                         showErrorView()
                     }
                 }
@@ -122,12 +122,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             addProductToCartLive.observe(viewLifecycleOwner) {
                 it?.let { state ->
                     when (state) {
-                        is ResponseState.Success -> {
+                        is ViewState.Success -> {
                             requireView().showSnackbar(getString(R.string.product_added_to_cart), getString(R.string.go_to_cart)) {
                                 navToCart()
                             }
                         }
-                        is ResponseState.Error -> {
+                        is ViewState.Error -> {
                             requireView().showSnackbar(getString(R.string.error_add_to_cart), getString(
                                 com.jlndev.coreandroid.R.string.try_again)) {
                                 state.action?.invoke()

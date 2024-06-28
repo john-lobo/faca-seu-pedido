@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
-import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.baseservice.state.ViewState
 import com.jlndev.coreandroid.bases.fragment.BaseFragment
 import com.jlndev.coreandroid.ext.gone
 import com.jlndev.coreandroid.ext.visible
@@ -58,7 +58,7 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
         with(viewModel) {
             getOrdersHistoryLive.observe(viewLifecycleOwner) {
                 when (it) {
-                    is ResponseState.Success -> {
+                    is ViewState.Success -> {
                         val items = it.data.map { it.toOrderHistoryItem() }
                         orderHistoryAdapter.submitList(items)
                         if (items.isNotEmpty()) {
@@ -68,7 +68,7 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
                         }
                     }
 
-                    is ResponseState.Error -> {
+                    is ViewState.Error -> {
                         showErrorView()
                     }
 
@@ -78,7 +78,7 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
 
             userLive.observe(viewLifecycleOwner) {
                 when (it) {
-                    is ResponseState.Success -> {
+                    is ViewState.Success -> {
                         it.data?.let {
                             viewModel.getAllOrders()
                         } ?: run {
@@ -86,7 +86,7 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
                         }
                     }
 
-                    is ResponseState.Error -> {
+                    is ViewState.Error -> {
                         findNavController().navigate(R.id.action_order_history_to_login)
                     }
 
