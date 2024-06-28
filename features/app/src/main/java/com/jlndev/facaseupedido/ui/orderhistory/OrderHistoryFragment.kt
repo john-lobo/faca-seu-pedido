@@ -121,6 +121,6 @@ class OrderHistoryFragment : BaseFragment<FragmentOrderHistoryBinding, OrderHist
     }
 
     private fun navToHome() {
-        requireActivity().supportFragmentManager.popBackStackImmediate()
+        findNavController().popBackStack()
     }
 }
